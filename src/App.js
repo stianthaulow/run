@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import PaceInput from "./PaceInput";
+import PaceInput from "./components/PaceInput";
+import Slider from "./components/Slider";
 
 import "./App.css";
 
@@ -24,7 +25,7 @@ const distances = [
   { key: "5k", factor: 5, label: "5k" },
   { key: "10k", factor: 10, label: "10k" },
   { key: "15k", factor: 15, label: "15k" },
-  { key: "20k", factor: 15, label: "20k" },
+  { key: "20k", factor: 20, label: "20k" },
   { key: "halvmarathon", factor: 21.0975, label: "halvmarathon" },
   { key: "30k", factor: 30, label: "30k" },
   { key: "marathon", factor: 42.195, label: "marathon" },
@@ -38,9 +39,12 @@ function App() {
   });
   return (
     <main>
-      {distances.map((distance) => (
-        <PaceInput {...distance} pace={pace} setPace={setPace} />
-      ))}
+      <div className="pace-inputs">
+        {distances.map((distance) => (
+          <PaceInput {...distance} pace={pace} setPace={setPace} />
+        ))}
+      </div>
+      <Slider pace={pace} setPace={setPace} />
     </main>
   );
 }

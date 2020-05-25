@@ -1,5 +1,14 @@
 import React, { useState, useLayoutEffect, useRef } from "react";
 
+import {
+  incrementHours,
+  decrementHours,
+  incrementMinuttes,
+  decrementMinuttes,
+  incrementSeconds,
+  decrementSeconds,
+} from "../paceStep";
+
 const parsePace = (paceInput) => {
   if (!paceInput) return "";
   const parts = paceInput.toString().split(":").map(Number);
@@ -20,12 +29,12 @@ const pad = (number) => number.toFixed().toString().padStart(2, "0");
 
 const format = ({ hours, minuttes, seconds }) => {
   if (hours) {
-    return `${pad(hours)}:${pad(minuttes)}:${pad(seconds)}`;
+    return `${hours.toFixed()}:${pad(minuttes)}:${pad(seconds)}`;
   }
   if (minuttes) {
-    return `${minuttes}:${pad(seconds)}`;
+    return `${minuttes.toFixed()}:${pad(seconds)}`;
   }
-  return seconds;
+  return seconds.toFixed();
 };
 
 const convertPace = (pace, factor) => {
@@ -65,86 +74,29 @@ export default function PaceInput({ label, factor, pace, setPace }) {
     }
   };
 
-  const incrementHours = () => {
-    let { hours, minuttes, seconds } = parsePace(value);
-    hours = hours ? hours + 1 : 1;
-    update(format({ hours, minuttes, seconds }));
-  };
-
-  const decrementHours = () => {
-    let { hours, minuttes, seconds } = parsePace(value);
-    hours = hours ? hours - 1 : 0;
-    if (hours < 0) {
-      hours = 0;
-    }
-    update(format({ hours, minuttes, seconds }));
-  };
-
-  const incrementMinuttes = () => {
-    let { hours, minuttes, seconds } = parsePace(value);
-    if (minuttes === 59) {
-      minuttes = 0;
-      hours = hours ? hours + 1 : 1;
-    } else {
-      minuttes = minuttes ? minuttes + 1 : 1;
-    }
-    update(format({ hours, minuttes, seconds }));
-  };
-
-  const decrementMinuttes = () => {
-    let { hours, minuttes, seconds } = parsePace(value);
-    minuttes = minuttes ? minuttes - 1 : 0;
-    if (minuttes < 0) {
-      minuttes = 0;
-    }
-    update(format({ hours, minuttes, seconds }));
-  };
-
-  const incrementSeconds = () => {
-    let { hours, minuttes, seconds } = parsePace(value);
-    if (seconds === 59) {
-      seconds = 0;
-      minuttes = minuttes ? minuttes + 1 : 1;
-    } else {
-      seconds = seconds ? seconds + 1 : 1;
-    }
-    update(format({ hours, minuttes, seconds }));
-  };
-
-  const decrementSeconds = () => {
-    let { hours, minuttes, seconds } = parsePace(value);
-    if (seconds === 0 || !seconds) {
-      if (minuttes > 0) {
-        seconds = 59;
-        minuttes--;
-      }
-    } else {
-      seconds--;
-    }
-    update(format({ hours, minuttes, seconds }));
-  };
+  const step = (fn) => update(format(fn(pace)));
 
   const handleKeyDown = (e) => {
     if (e.key === "ArrowUp") {
       e.preventDefault();
       setCursorPosition(e.target.selectionStart);
       if (isCursorInHours(e.target)) {
-        incrementHours();
+        step(incrementHours);
       } else if (isCursorInMinuttes(e.target)) {
-        incrementMinuttes();
+        step(incrementMinuttes);
       } else {
-        incrementSeconds();
+        step(incrementSeconds);
       }
     }
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setCursorPosition(e.target.selectionStart);
       if (isCursorInHours(e.target)) {
-        decrementHours();
+        step(decrementHours);
       } else if (isCursorInMinuttes(e.target)) {
-        decrementMinuttes();
+        step(decrementMinuttes);
       } else {
-        decrementSeconds();
+        step(decrementSeconds);
       }
     }
   };

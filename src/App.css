@@ -1,9 +1,41 @@
+main {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 4fr 1fr;
+  grid-template-areas: "pace-input slider";
+}
+
+.pace-inputs {
+  grid-area: pace-input;
+  margin: auto 0;
+}
+
+.slider {
+  grid-area: slider;
+  display: flex;
+  align-items: center;
+}
+
+.slider .scroll-icon {
+  width: 100%;
+}
+
+.chevron.decrease {
+  transform: rotate(180deg);
+}
+
 input {
   border-radius: 3px;
-  border: solid 1px #999;
-  font-size: 1.2em;
-  margin: 2px;
+  border: none;
+  font-size: 2em;
+  margin: 5px;
   padding: 2px 5px;
-  max-width: 75px;
+  max-width: 140px;
   text-align: right;
+  background-color: transparent;
+  color: #eee;
+}
+
+label {
+  font-size: 1.3em;
 }
