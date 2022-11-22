@@ -1,41 +1,39 @@
-main {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: 4fr 1fr;
-  grid-template-areas: "pace-input slider";
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
-.pace-inputs {
-  grid-area: pace-input;
-  margin: auto 0;
-}
-
-.slider {
-  grid-area: slider;
-  display: flex;
-  align-items: center;
-}
-
-.slider .scroll-icon {
-  width: 100%;
-}
-
-.chevron.decrease {
-  transform: rotate(180deg);
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
 }
 
 input {
-  border-radius: 3px;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  width: 8.5rem;
+  border-radius: 4px;
   border: none;
-  font-size: 2em;
-  margin: 5px;
-  padding: 2px 5px;
-  max-width: 140px;
-  text-align: right;
-  background-color: transparent;
-  color: #eee;
+  padding: 0.1rem 0.3rem;
+}
+
+input:invalid {
+  background-color: crimson;
 }
 
 label {
-  font-size: 1.3em;
+  margin-left: 0.3rem;
+  font-size: 1.5rem;
+}
+
+@media only screen and (max-width: 600px) {
+  input,
+  label {
+    font-size: 1.4rem;
+  }
+
+  input {
+    width: 6rem;
+  }
 }
