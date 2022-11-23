@@ -1,5 +1,5 @@
 import { PaceInput } from "./components/PaceInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   isValidSpeed,
   isValidTime,
@@ -100,6 +100,22 @@ const initialSecondsPrMeter = parsePace(startPace) / 1000;
 
 function App() {
   const [secondsPrMeter, setSecondsPrMeter] = useState(initialSecondsPrMeter);
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    const elem = e.target as HTMLElement;
+    if (e.key === "ArrowUp" && elem.tagName === "BODY")
+      setSecondsPrMeter((currentPace) => currentPace + 0.001);
+
+    if (e.key === "ArrowDown" && elem.tagName === "BODY")
+      setSecondsPrMeter((currentPace) => currentPace - 0.001);
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <>
       <h2>Pace:</h2>
