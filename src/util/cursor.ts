@@ -1,6 +1,9 @@
+const isCursorBeforeSeparator = (elem: HTMLInputElement, separator: string) =>
+  elem.value.lastIndexOf(separator) !== -1 &&
+  (elem.selectionStart || 0) <= elem.value.lastIndexOf(separator);
+
 const isCursorInMinuttes = (elem: HTMLInputElement) =>
-  elem.value.lastIndexOf(":") !== -1 &&
-  (elem.selectionStart || 0) <= elem.value.lastIndexOf(":");
+  isCursorBeforeSeparator(elem, ":");
 
 const isCursorInHours = (elem: HTMLInputElement) => {
   if ((elem.value.match(/:/g) || []).length !== 2) {
@@ -9,7 +12,7 @@ const isCursorInHours = (elem: HTMLInputElement) => {
   return (elem.selectionStart || 0) <= elem.value.indexOf(":");
 };
 
-export const activeTimeFactorFromCursor = (elem: HTMLInputElement) => {
+export const paceTimeFactorFromCursor = (elem: HTMLInputElement) => {
   if (isCursorInHours(elem)) {
     return 60 * 60;
   }
@@ -19,4 +22,12 @@ export const activeTimeFactorFromCursor = (elem: HTMLInputElement) => {
   }
 
   return 1;
+};
+
+export const speedTimeFactorFromCursor = (elem: HTMLInputElement) => {
+  if (isCursorBeforeSeparator(elem, ".")) {
+    return 1;
+  }
+
+  return 0.01;
 };

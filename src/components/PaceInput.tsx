@@ -6,45 +6,35 @@ import type {
 } from "react";
 import { useEffect, useState, useRef } from "react";
 
-import {
-  convertPaceToTime,
-  convertTimeToPace,
-  formatTime,
-  isValidTime,
-  parseTime,
-  validTimePattern,
-} from "../util/time";
-import { activeTimeFactorFromCursor } from "../util/cursor";
 import useIsomorphicLayoutEffect from "../hooks/useIsomorphicLayoutEffect";
 import usePreventScroll from "../hooks/usePreventScroll";
 import useDebounce from "../hooks/useDebounce";
 
-export type Distance = {
+type PaceInputProps = {
   id: string;
-  distanceInMeters: number;
   label: string;
-};
-
-type PaceInputProps = Distance & {
   paceInSeconds: number;
-  dispatchTime: Dispatch<SetStateAction<number>>;
+  pattern: string;
+  getDisplayValue: (time: number) => string;
+  getPaceValue: (value: string) => number;
+  isValid: (value: string) => Boolean;
+  step: (direction: "up" | "down", elem: HTMLInputElement) => number;
+  dispatchPace: Dispatch<SetStateAction<number>>;
 };
-const getDisplayValue = (time: number, distance: number) =>
-  formatTime(convertTimeToPace(time, distance));
-
-const getConvertedPace = (input: string, distance: number) =>
-  convertPaceToTime(parseTime(input), distance);
 
 export const PaceInput = ({
   id,
-  distanceInMeters,
   label,
+  pattern,
+  getDisplayValue,
+  getPaceValue,
+  step,
+  isValid,
   paceInSeconds,
-  dispatchTime,
+  dispatchPace,
 }: PaceInputProps) => {
   const ref = useRef<HTMLInputElement>(null);
-  const formatedPace = getDisplayValue(paceInSeconds, distanceInMeters);
-  const [value, setValue] = useState(formatedPace);
+  const [value, setValue] = useState(getDisplayValue(paceInSeconds));
   const debouncedValue = useDebounce(value, 1000);
   const [isSource, setIsSource] = useState(false);
   const [cursorPosition, setCursorPosition] = useState<number | null>(null);
@@ -52,43 +42,38 @@ export const PaceInput = ({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault();
-      step(e.currentTarget, e.key === "ArrowDown" ? "down" : "up");
+      stepInput(e.currentTarget, e.key === "ArrowDown" ? "down" : "up");
     }
   };
 
   const handleWheel = (e: WheelEvent<HTMLInputElement>) => {
-    step(e.currentTarget, e.deltaY > 0 ? "down" : "up");
+    stepInput(e.currentTarget, e.deltaY > 0 ? "down" : "up");
   };
 
-  const step = (elem: HTMLInputElement, direction: "up" | "down") => {
-    // if (!isValidTime(elem.value)) return;
-    let timeFactor = activeTimeFactorFromCursor(elem);
-    if (direction === "down") {
-      timeFactor = -timeFactor;
-    }
-    const newTime = parseTime(elem.value) + timeFactor;
+  const stepInput = (elem: HTMLInputElement, direction: "up" | "down") => {
     setCursorPosition(elem.selectionStart);
-    dispatchTime(getConvertedPace(formatTime(newTime), distanceInMeters));
+    const newTime = step(direction, elem);
+    dispatchPace(newTime);
   };
 
   // Dispatch pace updates
   useEffect(() => {
-    if (!isValidTime(debouncedValue)) return;
+    if (!isValid(debouncedValue)) return;
     if (isSource) {
-      dispatchTime(getConvertedPace(debouncedValue, distanceInMeters));
+      dispatchPace(getPaceValue(debouncedValue));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedValue, distanceInMeters, dispatchTime]);
+  }, [debouncedValue, dispatchPace]);
 
   // React to pace updates
   useEffect(() => {
-    const newDisplayValue = getDisplayValue(paceInSeconds, distanceInMeters);
+    const newDisplayValue = getDisplayValue(paceInSeconds);
     if (newDisplayValue !== value && !isSource) {
       setValue(newDisplayValue);
     }
     setIsSource(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [distanceInMeters, paceInSeconds]);
+  }, [paceInSeconds]);
 
   // Reset cursor position on stepping
   useIsomorphicLayoutEffect(() => {
@@ -107,9 +92,12 @@ export const PaceInput = ({
         size={5}
         name={id}
         value={value}
-        pattern={validTimePattern}
+        pattern={pattern}
         onKeyDown={handleKeyDown}
         onWheel={handleWheel}
+        onFocus={(e) =>
+          e.currentTarget.setSelectionRange(value.length, value.length)
+        }
         onChange={(e) => {
           setCursorPosition(null);
           setIsSource(true);

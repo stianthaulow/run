@@ -1,11 +1,26 @@
-import type { Distance } from "./components/PaceInput";
 import { PaceInput } from "./components/PaceInput";
 import { useState } from "react";
-import { parseTime } from "./util/time";
-import { SpeedInput } from "./components/SpeedInput";
+import {
+  isValidSpeed,
+  isValidTime,
+  parsePace,
+  validSpeedPattern,
+  validTimePattern,
+} from "./util/time";
 import "./App.css";
+import {
+  paceDisplayValueForDistance,
+  paceFromDisplayValueForDistance,
+  paceFromDisplayValueForSpeed,
+  speedDisplayValueForFactor,
+  stepPaceForDistance,
+  stepSpeedForFactor,
+} from "./util/format";
+import { StepScroller } from "./components/StepScroller";
 
-const distances: Distance[] = [
+const startPace = "05:20";
+
+const distances = [
   {
     id: "1km",
     distanceInMeters: 1000,
@@ -81,33 +96,51 @@ const speeds = [
   },
 ];
 
-const startPace = "05:20";
-
-const initialSecondsPrMeter = parseTime(startPace) / 1000;
+const initialSecondsPrMeter = parsePace(startPace) / 1000;
 
 function App() {
   const [secondsPrMeter, setSecondsPrMeter] = useState(initialSecondsPrMeter);
   return (
-    <div className="App">
+    <>
       <h2>Pace:</h2>
-      {distances.map((distance) => (
-        <PaceInput
-          key={distance.id}
-          {...distance}
-          paceInSeconds={secondsPrMeter}
-          dispatchTime={setSecondsPrMeter}
-        />
-      ))}
+      <section>
+        {distances.map(({ id, distanceInMeters, label }) => (
+          <PaceInput
+            key={id}
+            id={id}
+            label={label}
+            pattern={validTimePattern}
+            getDisplayValue={paceDisplayValueForDistance(distanceInMeters)}
+            getPaceValue={paceFromDisplayValueForDistance(distanceInMeters)}
+            step={stepPaceForDistance(distanceInMeters)}
+            isValid={isValidTime}
+            paceInSeconds={secondsPrMeter}
+            dispatchPace={setSecondsPrMeter}
+          />
+        ))}
+      </section>
       <h2>Speed:</h2>
-      {speeds.map((speed) => (
-        <SpeedInput
-          key={speed.id}
-          {...speed}
-          paceInSeconds={secondsPrMeter}
-          dispatchTime={setSecondsPrMeter}
-        />
-      ))}
-    </div>
+      <section>
+        {speeds.map(({ id, factor, label }) => (
+          <PaceInput
+            key={id}
+            id={id}
+            label={label}
+            pattern={validSpeedPattern}
+            getDisplayValue={speedDisplayValueForFactor(factor)}
+            getPaceValue={paceFromDisplayValueForSpeed(factor)}
+            step={stepSpeedForFactor(factor)}
+            isValid={isValidSpeed}
+            paceInSeconds={secondsPrMeter}
+            dispatchPace={setSecondsPrMeter}
+          />
+        ))}
+      </section>
+      <StepScroller
+        secondsPrMeter={secondsPrMeter}
+        dispatchPace={setSecondsPrMeter}
+      />
+    </>
   );
 }
 

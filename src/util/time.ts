@@ -1,4 +1,4 @@
-export const parseTime = (timeString: string) => {
+export const parsePace = (timeString: string) => {
   const components = timeString.split(":").map(Number);
 
   if (components.length === 1) {
@@ -16,10 +16,13 @@ export const parseTime = (timeString: string) => {
 
 export const validTimePattern =
   "^(?:[0-9]?[0-9]?[0-9]:)?(?:[0-9]?[0-9]:)?(?:[0-9]?[0-9])$";
+export const validSpeedPattern = "^(?:[0-9]?[0-9]?[0-9].)?(?:[0-9]?[0-9])$";
 
 const validTimeRegExp = new RegExp(validTimePattern);
+const validSpeedRegExp = new RegExp(validSpeedPattern);
 
 export const isValidTime = (input: string) => validTimeRegExp.test(input);
+export const isValidSpeed = (input: string) => validSpeedRegExp.test(input);
 
 const pad0 = (timeComponent: number) =>
   timeComponent.toFixed(0).padStart(2, "0");
@@ -48,7 +51,7 @@ export const convertTimeToPace = (
   distanceInMeters: number
 ) => distanceInMeters * timeInSeconds;
 
-export const convertPaceToTime = (
+export const convertValueToPace = (
   paceInSeconds: number,
   distanceInMeters: number
 ) => paceInSeconds / distanceInMeters;
