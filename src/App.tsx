@@ -27,6 +27,11 @@ const distances = [
     label: "100m",
   },
   {
+    id: "400m",
+    distanceInMeters: 400,
+    label: "400m",
+  },
+  {
     id: "1km",
     distanceInMeters: 1000,
     label: "min/km",
