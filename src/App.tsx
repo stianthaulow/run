@@ -22,6 +22,11 @@ const startPace = "05:20";
 
 const distances = [
   {
+    id: "100m",
+    distanceInMeters: 100,
+    label: "100m",
+  },
+  {
     id: "1km",
     distanceInMeters: 1000,
     label: "min/km",
