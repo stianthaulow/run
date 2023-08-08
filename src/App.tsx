@@ -62,6 +62,11 @@ const distances = [
     label: "10000m",
   },
   {
+    id: "15km",
+    distanceInMeters: 15_000,
+    label: "15k",
+  },
+  {
     id: "20km",
     distanceInMeters: 20_000,
     label: "20k",
