@@ -1,7 +1,9 @@
+import { Label } from "@/components/ui/label";
+
 function App() {
   return (
     <>
-      <p className="text-3xl font-bold underline">hello</p>
+      <Label>hello</Label>
     </>
   );
 }
