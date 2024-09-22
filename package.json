@@ -1,33 +1,33 @@
 {
-	"name": "run",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"scripts": {
-		"dev": "vite",
-		"build": "tsc -b && vite build",
-		"check": "biome check .",
-		"fix": "biome check . --write",
-		"preview": "vite preview",
-		"prepare": "husky",
-		"commitlint": "commitlint --last"
-	},
-	"dependencies": {
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.9.2",
-		"@commitlint/cli": "^19.5.0",
-		"@commitlint/config-conventional": "^19.5.0",
-		"@commitlint/types": "^19.5.0",
-		"@types/react": "^18.3.3",
-		"@types/react-dom": "^18.3.0",
-		"@vitejs/plugin-react": "^4.3.1",
-		"husky": "^9.1.6",
-		"knip": "^5.30.4",
-		"typescript": "^5.5.3",
-		"vite": "^5.4.1",
-		"vite-tsconfig-paths": "^5.0.1"
-	}
+  "name": "run",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "check": "biome check .",
+    "fix": "biome check . --write",
+    "preview": "vite preview",
+    "prepare": "husky",
+    "commitlint": "commitlint --last"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.2",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@commitlint/types": "^19.5.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "husky": "^9.1.6",
+    "knip": "^5.30.4",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vite-tsconfig-paths": "^5.0.1"
+  }
 }
