@@ -1,11 +1,9 @@
 import { type Distance, initialDistances } from "@/distances";
-import { atom, useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+import { useTranslation } from "react-i18next";
 
 const distancesAtom = atomWithStorage("distances", initialDistances);
-const visibleDistancesAtom = atom((get) =>
-  get(distancesAtom).filter((d) => d.isVisible),
-);
 
 type AddDistanceAction = {
   type: "add";
@@ -45,6 +43,19 @@ function distanceReducer(distances: Distance[], action: DistanceAction) {
 
 export function useDistances() {
   const [distances, setDistances] = useAtom(distancesAtom);
+  const { t } = useTranslation();
+
+  const translatedDistances = distances.map((distance) => {
+    if (distance.length === 21097.5) {
+      return { ...distance, label: t("halfMarathon") };
+    }
+    if (distance.length === 42195) {
+      return { ...distance, label: t("marathon") };
+    }
+    return distance;
+  });
+
+  const visibleDistances = translatedDistances.filter((d) => d.isVisible);
 
   const addDistance = (distance: Distance) =>
     setDistances((prev) => distanceReducer(prev, { type: "add", distance }));
@@ -67,8 +78,8 @@ export function useDistances() {
     setDistances((prev) => distanceReducer(prev, { type: "delete", length }));
 
   return {
-    distances,
-    visibleDistances: useAtomValue(visibleDistancesAtom),
+    distances: translatedDistances,
+    visibleDistances,
     addDistance,
     toggleVisibility,
     toggleMilliseconds,
