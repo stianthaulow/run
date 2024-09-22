@@ -1,9 +1,14 @@
-import { Label } from "@/components/ui/label";
+import { useDistances } from "@/hooks/useDistances";
 
 function App() {
+  const { visibleDistances } = useDistances();
   return (
     <>
-      <Label>hello</Label>
+      <ul>
+        {visibleDistances.map((distance) => (
+          <li key={distance.length}>{distance.label}</li>
+        ))}
+      </ul>
     </>
   );
 }
