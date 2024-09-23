@@ -1,6 +1,7 @@
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { ToggleEditMode } from "@/components/ToggleEditMode";
 import { Card } from "@/components/ui/card";
+import { useEditMode } from "@/hooks/useEditMode";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 type LayoutProps = {
@@ -9,6 +10,7 @@ type LayoutProps = {
 
 export function Layout({ children }: LayoutProps) {
   const isTabletOrLarger = useMediaQuery("(min-width: 640px)");
+  const { isEditMode } = useEditMode();
 
   return (
     <div className="flex min-h-screen justify-between p-2">
@@ -19,7 +21,7 @@ export function Layout({ children }: LayoutProps) {
           <div className="w-full">{children}</div>
         )}
       </main>
-      <LanguageSelector />
+      {isEditMode && <LanguageSelector />}
       <ToggleEditMode />
     </div>
   );

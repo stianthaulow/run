@@ -37,7 +37,15 @@ function distanceReducer(distances: Distance[], action: DistanceAction) {
           : distance,
       );
     case "delete":
-      return distances.filter((distance) => distance.length !== action.length);
+      return distances
+        .map((distance) =>
+          distance.length === action.length
+            ? distance.isDefault
+              ? { ...distance, isVisible: false }
+              : null
+            : distance,
+        )
+        .filter((d) => d !== null);
   }
 }
 

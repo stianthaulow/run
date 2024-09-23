@@ -19,13 +19,14 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useDistances } from "@/hooks/useDistances";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export function AddButton() {
+export function AddDistance() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -61,6 +62,7 @@ export function AddButton() {
           <DrawerTitle>{t("add.distance")}</DrawerTitle>
           <DrawerDescription>{t("add.description")}</DrawerDescription>
         </DrawerHeader>
+        <DefaultDistances />
         <AddForm className="px-4" />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
@@ -69,6 +71,24 @@ export function AddButton() {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
+  );
+}
+
+function DefaultDistances() {
+  const { distances, toggleVisibility } = useDistances();
+  return (
+    <div className="m-5 mt-0 flex flex-wrap gap-4">
+      {distances.map((distance) =>
+        distance.isDefault && !distance.isVisible ? (
+          <Button
+            key={distance.length}
+            onClick={() => toggleVisibility(distance.length)}
+          >
+            {distance.label}
+          </Button>
+        ) : null,
+      )}
+    </div>
   );
 }
 

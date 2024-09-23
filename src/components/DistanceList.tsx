@@ -1,4 +1,4 @@
-import { AddButton } from "@/components/AddButton";
+import { AddDistance } from "@/components/AddDistance";
 import { Button } from "@/components/ui/button";
 import { useDistances } from "@/hooks/useDistances";
 import { useEditMode } from "@/hooks/useEditMode";
@@ -11,7 +11,10 @@ export function DistanceList() {
     <>
       <ul className="flex flex-col gap-2">
         {visibleDistances.map((distance) => (
-          <li key={distance.length} className="flex items-center gap-2 text-xl">
+          <li
+            key={distance.length}
+            className="flex items-center gap-2 text-2xl"
+          >
             {isEditMode && (
               <Button
                 size="icon"
@@ -28,7 +31,7 @@ export function DistanceList() {
           </li>
         ))}
       </ul>
-      {isEditMode && <AddButton />}
+      {isEditMode && <AddDistance />}
     </>
   );
 }

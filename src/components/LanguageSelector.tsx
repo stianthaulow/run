@@ -15,6 +15,10 @@ import { useTranslation } from "react-i18next";
 export function LanguageSelector() {
   const { t, i18n } = useTranslation();
 
+  if (i18n.language === "en-US") {
+    i18n.changeLanguage("en");
+  }
+
   const flag = i18n.language === "no" ? norwegianFlag : englishFlag;
 
   return (
