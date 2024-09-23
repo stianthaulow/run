@@ -1,4 +1,5 @@
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { ToggleEditMode } from "@/components/ToggleEditMode";
 import { Card } from "@/components/ui/card";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
@@ -19,6 +20,7 @@ export function Layout({ children }: LayoutProps) {
         )}
       </main>
       <LanguageSelector />
+      <ToggleEditMode />
     </div>
   );
 }
