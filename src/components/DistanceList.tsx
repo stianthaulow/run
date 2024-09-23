@@ -1,8 +1,8 @@
+import { AddButton } from "@/components/AddButton";
 import { Button } from "@/components/ui/button";
 import { useDistances } from "@/hooks/useDistances";
 import { useEditMode } from "@/hooks/useEditMode";
 import { Trash2 } from "lucide-react";
-import { AddButton } from "@/components/AddButton";
 
 export function DistanceList() {
   const { visibleDistances, deleteDistance } = useDistances();

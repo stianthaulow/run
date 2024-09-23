@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
+import { l } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 import { initReactI18next } from "react-i18next";
 
 const resources = {
@@ -16,6 +17,15 @@ const resources = {
         norwegianFlag: "Norwegian flag",
         englishFlag: "USA flag",
       },
+      add: {
+        distance: "Add distance",
+        description:
+          "Choose from the predefined distances or add a custom one.",
+        distanceLabel: "Distance (in meters)",
+        labelLabel: "Label",
+        save: "Save",
+        close: "Close",
+      },
     },
   },
   no: {
@@ -30,6 +40,15 @@ const resources = {
         norwegian: "Norsk",
         norwegianFlag: "Norsk flagg",
         englishFlag: "USA flagg",
+      },
+      add: {
+        distance: "Legg til distanse",
+        description:
+          "Velg fra de forhåndsdefinerte distansene eller legg til en egen.",
+        distanceLabel: "Distanse (i meter)",
+        labelLabel: "Tekst",
+        save: "Lagre",
+        close: "Lukk",
       },
     },
   },
