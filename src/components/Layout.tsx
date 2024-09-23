@@ -10,7 +10,7 @@ export function Layout({ children }: LayoutProps) {
   const isTabletOrLarger = useMediaQuery("(min-width: 640px)");
 
   return (
-    <div className="flex min-h-screen p-2 justify-between">
+    <div className="flex min-h-screen justify-between p-2">
       <main>
         {isTabletOrLarger ? (
           <Card className="w-full max-w-md p-6">{children}</Card>
