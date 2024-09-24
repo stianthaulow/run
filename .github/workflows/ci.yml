@@ -10,16 +10,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Install bun
       uses: oven-sh/setup-bun@v1
     
     - name: Install dependencies
       run: bun install --frozen-lockfile
-
-    - name: Validate current commit (last commit) with commitlint
-      if: github.event_name == 'push'
-      run: bunx commitlint --last --verbose
 
     - name: Validate PR commits with commitlint
       if: github.event_name == 'pull_request'
