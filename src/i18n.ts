@@ -8,7 +8,9 @@ import nbZodTranslation from "zod-i18n-map/locales/nb/zod.json";
 
 const noTranslation = {
   pace: "Pace",
+  distances: "Distanser",
   kph: "km/t",
+  minprkm: "min/km",
   marathon: "Maraton",
   halfMarathon: "Halvmaraton",
   language: {
@@ -33,6 +35,8 @@ const noTranslation = {
 
 const enTranslation: typeof noTranslation = {
   pace: "Pace",
+  distances: "Distances",
+  minprkm: "min/km",
   kph: "kph",
   marathon: "Marathon",
   halfMarathon: "Half Marathon",

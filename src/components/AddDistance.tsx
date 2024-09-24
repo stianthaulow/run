@@ -32,6 +32,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { z } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -92,18 +93,32 @@ export function AddDistance() {
 
 function DefaultDistances() {
   const { distances, toggleVisibility } = useDistances();
+
+  const fadeInVariants = {
+    visible: { opacity: 1 },
+    exit: { opacity: 0 },
+  };
+
   return (
     <div className="m-5 mt-0 flex flex-wrap gap-4">
-      {distances.map((distance) =>
-        distance.isDefault && !distance.isVisible ? (
-          <Button
-            key={distance.length}
-            onClick={() => toggleVisibility(distance.length)}
-          >
-            {distance.label}
-          </Button>
-        ) : null,
-      )}
+      <AnimatePresence>
+        {distances.map((distance) =>
+          distance.isDefault && !distance.isVisible ? (
+            <motion.div
+              key={distance.length}
+              variants={fadeInVariants}
+              initial="visible"
+              animate="visible"
+              exit="exit"
+              transition={{ duration: 0.3 }}
+            >
+              <Button onClick={() => toggleVisibility(distance.length)}>
+                {distance.label}
+              </Button>
+            </motion.div>
+          ) : null,
+        )}
+      </AnimatePresence>
     </div>
   );
 }

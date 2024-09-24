@@ -16,7 +16,7 @@ const defaultDistances = [
   {
     length: 200,
     label: "200m",
-    showMilliseconds: false,
+    showMilliseconds: true,
     isVisible: false,
   },
   {
