@@ -1,17 +1,42 @@
 import { Button } from "@/components/ui/button";
 import { useEditMode } from "@/hooks/useEditMode";
+import { motion } from "framer-motion";
 import { Pencil } from "lucide-react";
 
+const MotionButton = motion(Button);
+
 export function ToggleEditMode() {
-  const { toggleEditMode } = useEditMode();
+  const { toggleEditMode, isEditMode } = useEditMode();
+
+  const wiggleVariants = {
+    wiggle: {
+      x: [0, 2, -1, 2, 1, 0],
+      y: [0, 1, -2, 1, 2, 0],
+      rotate: [0, -4, 4, -3, 3, 0],
+      transition: {
+        duration: 0.4,
+        repeat: Number.POSITIVE_INFINITY,
+        ease: "easeInOut",
+      },
+    },
+    static: {
+      rotate: 0,
+      transition: {
+        duration: 0.2,
+      },
+    },
+  };
+
   return (
-    <Button
+    <MotionButton
       size="icon"
       className="fixed right-2 bottom-2 size-14 rounded-full"
       variant="outline"
       onClick={toggleEditMode}
+      variants={wiggleVariants}
+      animate={isEditMode ? "wiggle" : "static"}
     >
       <Pencil />
-    </Button>
+    </MotionButton>
   );
 }

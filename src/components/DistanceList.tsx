@@ -2,19 +2,19 @@ import { AddDistance } from "@/components/AddDistance";
 import { TimeControl } from "@/components/TimeControl";
 import { Button } from "@/components/ui/button";
 import { useDistances } from "@/hooks/useDistances";
-import { useEditMode } from "@/hooks/useEditMode";
+import { editModeTransition, useEditMode } from "@/hooks/useEditMode";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
+
+const fadeInFromLeftVariants = {
+  hidden: { opacity: 0, x: -10 },
+  visible: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -10 },
+};
 
 export function DistanceList() {
   const { visibleDistances, deleteDistance } = useDistances();
   const { isEditMode } = useEditMode();
-
-  const fadeInFromLeftVariants = {
-    hidden: { opacity: 0, x: -10 },
-    visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -10 },
-  };
 
   return (
     <LayoutGroup>
@@ -23,7 +23,7 @@ export function DistanceList() {
           <motion.li
             key={distance.length}
             layout
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={editModeTransition}
             className="flex items-center gap-2"
           >
             <AnimatePresence mode="popLayout">
@@ -33,7 +33,7 @@ export function DistanceList() {
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  transition={editModeTransition}
                   className="flex-shrink-0"
                 >
                   <Button
@@ -64,7 +64,7 @@ export function DistanceList() {
             animate="visible"
             exit="exit"
             layout
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={editModeTransition}
           >
             <AddDistance />
           </motion.div>
