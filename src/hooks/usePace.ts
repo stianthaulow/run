@@ -27,6 +27,7 @@ export function usePace() {
     showMilliseconds: boolean,
   ) => {
     const newPace = (parseTime(time) + direction * timeFactor) / distance;
+    if (newPace < 0) return time;
     setPace(newPace);
     return formatTime(newPace * distance, showMilliseconds);
   };

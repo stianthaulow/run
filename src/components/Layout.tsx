@@ -1,9 +1,11 @@
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { ToggleEditMode } from "@/components/ToggleEditMode";
 import { Card } from "@/components/ui/card";
-import { useEditMode } from "@/hooks/useEditMode";
+import { editModeTransition, useEditMode } from "@/hooks/useEditMode";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { AnimatePresence, motion } from "framer-motion";
+import { Minus, Plus } from "lucide-react";
+import { Button } from "./ui/button";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -21,7 +23,7 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="flex min-h-screen justify-between p-2">
-      <main>
+      <main className="w-full">
         {isTabletOrLarger ? (
           <Card className="w-full max-w-md p-6">{children}</Card>
         ) : (
@@ -35,10 +37,21 @@ export function Layout({ children }: LayoutProps) {
             initial="hidden"
             animate="visible"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={editModeTransition}
+            className="fixed top-2 right-2"
           >
             <LanguageSelector />
           </motion.div>
+        )}
+        {!isEditMode && (
+          <div className="mr-2 mb-20 flex flex-grow flex-col justify-between border border-zinc-900">
+            <Button size="icon" className="rounded-full">
+              <Plus />
+            </Button>
+            <Button size="icon" className="rounded-full">
+              <Minus />
+            </Button>
+          </div>
         )}
       </AnimatePresence>
       <ToggleEditMode />

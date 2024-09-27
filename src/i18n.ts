@@ -20,6 +20,9 @@ const noTranslation = {
     norwegianFlag: "Norsk flagg",
     englishFlag: "USA flagg",
   },
+  edit: {
+    showMs: "Vis ms?",
+  },
   addDistance: {
     title: "Legg til distanse",
     descriptionWithDefaults:
@@ -46,6 +49,9 @@ const enTranslation: typeof noTranslation = {
     norwegian: "Norwegian",
     norwegianFlag: "Norwegian flag",
     englishFlag: "USA flag",
+  },
+  edit: {
+    showMs: "Show ms?",
   },
   addDistance: {
     title: "Add distance",

@@ -1,5 +1,4 @@
 import type { Branded } from "@/types";
-import { V } from "vitest/dist/chunks/environment.C5eAp3K6.js";
 
 export const SECONDS_IN_MINUTE = 60;
 export const SECONDS_IN_HOUR = 3600;
