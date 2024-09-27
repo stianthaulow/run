@@ -1,33 +1,13 @@
-const isCursorBeforeSeparator = (elem: HTMLInputElement, separator: string) =>
-  elem.value.lastIndexOf(separator) !== -1 &&
-  (elem.selectionStart || 0) <= elem.value.lastIndexOf(separator);
-
-const isCursorInMinuttes = (elem: HTMLInputElement) =>
-  isCursorBeforeSeparator(elem, ":");
-
-const isCursorInHours = (elem: HTMLInputElement) => {
-  if ((elem.value.match(/:/g) || []).length !== 2) {
-    return false;
-  }
-  return (elem.selectionStart || 0) <= elem.value.indexOf(":");
-};
-
-export const paceTimeFactorFromCursor = (elem: HTMLInputElement) => {
-  if (isCursorInHours(elem)) {
-    return 60 * 60;
-  }
-
-  if (isCursorInMinuttes(elem)) {
-    return 60;
-  }
-
-  return 1;
-};
+const SPEED_BEFORE_DECIMAL = 1;
+const SPEED_AFTER_DECIMAL = 0.01;
 
 export const speedTimeFactorFromCursor = (elem: HTMLInputElement) => {
-  if (isCursorBeforeSeparator(elem, ".")) {
-    return 1;
+  const cursorPosition = elem.selectionStart ?? 0;
+  const timeString = elem.value;
+
+  if (cursorPosition <= timeString.indexOf(".")) {
+    return SPEED_BEFORE_DECIMAL;
   }
 
-  return 0.01;
+  return SPEED_AFTER_DECIMAL;
 };

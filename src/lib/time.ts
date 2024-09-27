@@ -1,122 +1,121 @@
-import { paceTimeFactorFromCursor } from "./cursor";
+import type { Branded } from "@/types";
+import { V } from "vitest/dist/chunks/environment.C5eAp3K6.js";
 
-export function parseTimeStringToMillieconds(timeString: string): number {
-  if (timeString.includes(".")) {
-    const [rest, msStr] = timeString.split(".");
-    const msPart = Number(msStr.trim());
-    return parseTimeStringWithoutMillisecondsToSeconds(rest) * 1000 + msPart;
-  }
+export const SECONDS_IN_MINUTE = 60;
+export const SECONDS_IN_HOUR = 3600;
 
-  return parseTimeStringWithoutMillisecondsToSeconds(timeString) * 1000;
+export type ValidTimeString = Branded<string, "ValidTimeString">;
+
+export function parseTime(timeString: ValidTimeString) {
+  const [mainPart, msPart = "0"] = timeString.split(".");
+
+  const [seconds = 0, minutes = 0, hours = 0] = mainPart
+    .split(":")
+    .reverse()
+    .map(Number);
+
+  const totalSeconds =
+    hours * SECONDS_IN_HOUR + minutes * SECONDS_IN_MINUTE + seconds;
+
+  return totalSeconds * 1000 + Number(msPart.padEnd(3, "0"));
 }
 
-export function parseTimeStringWithoutMillisecondsToSeconds(
-  timeString: string,
-): number {
-  const components = timeString.split(":").map(Number);
-
-  if (components.length === 1) {
-    return components[0] || 0;
+export function assertValidTimeString(
+  input: string,
+): asserts input is ValidTimeString {
+  if (!isValidTime(input)) {
+    throw new Error(`Invalid time string: "${input}"`);
   }
-
-  if (components.length === 2) {
-    const [minuttes = 0, seconds = 0] = components;
-    return minuttes * 60 + seconds;
-  }
-
-  const [hours = 0, minuttes = 0, seconds = 0] = components;
-  return hours * 60 * 60 + minuttes * 60 + seconds;
 }
 
-export const validSpeedPattern = "^(?:[0-9]?[0-9]?[0-9].)?(?:[0-9]?[0-9])$";
 export const validTimePattern =
-  "^(([0-1]?\\d|2[0-3]):[0-5]\\d(:[0-5]\\d)?(\\.\\d{1,3})?|[0-5]?\\d\\.\\d{1,3}|[0-9])$";
+  "^(?:(?:\\d{1,2}:){0,2}\\d{1,2}(?:\\.\\d{1,3})?)$";
+export const validSpeedPattern = "^\\d{1,3}(\\.\\d{1,2})?$";
 
-const validSpeedRegExp = new RegExp(validSpeedPattern);
 const validTimeRegExp = new RegExp(validTimePattern);
+const validSpeedRegExp = new RegExp(validSpeedPattern);
 
-export const isValidSpeed = (input: string) => validSpeedRegExp.test(input);
-export const isValidTime = (input: string) => validTimeRegExp.test(input);
-
-const pad0 = (timeComponent: number, length = 2) =>
-  timeComponent.toFixed(0).padStart(length, "0");
-
-export function formatTime(milliseconds: number, includeMilliseconds = false) {
-  let totalSeconds = Math.floor(milliseconds / 1000);
-  let remainingMilliseconds = milliseconds % 1000;
-
-  // Round up if remainingMilliseconds is more than 500 and includeMilliseconds is false
-  if (!includeMilliseconds && remainingMilliseconds >= 500) {
-    totalSeconds += 1;
-    remainingMilliseconds = 0; // Reset to 0 as it has been rounded up
-  }
-
-  if (totalSeconds === 0) {
-    return includeMilliseconds ? `0.${pad0(remainingMilliseconds, 3)}` : "0";
-  }
-
-  if (totalSeconds < 60) {
-    return includeMilliseconds
-      ? `${pad0(totalSeconds)}.${pad0(remainingMilliseconds, 3)}`
-      : pad0(totalSeconds);
-  }
-
-  if (totalSeconds < 60 * 60) {
-    const minutes = Math.floor(totalSeconds / 60);
-    const remainingSeconds = totalSeconds - minutes * 60;
-    return includeMilliseconds
-      ? `${pad0(minutes)}:${pad0(remainingSeconds)}.${pad0(remainingMilliseconds, 3)}`
-      : `${pad0(minutes)}:${pad0(remainingSeconds)}`;
-  }
-
-  const hours = Math.floor(totalSeconds / (60 * 60));
-  let remainingSeconds = totalSeconds - hours * 60 * 60;
-  const minutes = Math.floor(remainingSeconds / 60);
-  remainingSeconds = remainingSeconds - minutes * 60;
-
-  return includeMilliseconds
-    ? `${pad0(hours)}:${pad0(minutes)}:${pad0(remainingSeconds)}.${pad0(remainingMilliseconds, 3)}`
-    : `${pad0(hours)}:${pad0(minutes)}:${pad0(remainingSeconds)}`;
+export function isValidTime(input: string): input is ValidTimeString {
+  return validTimeRegExp.test(input);
 }
 
-export function toPaceStringForDistance(
-  distanceInMeters: number,
+export function isValidSpeed(input: string) {
+  return validSpeedRegExp.test(input);
+}
+
+function padZero(timeComponent: number) {
+  return String(timeComponent).padStart(2, "0");
+}
+
+export function formatTime(
+  milliseconds: number,
   showMilliseconds = false,
+): string {
+  const totalSeconds = Math.floor(milliseconds / 1000);
+  const hours = Math.floor(totalSeconds / SECONDS_IN_HOUR);
+  const minutes = Math.floor(
+    (totalSeconds % SECONDS_IN_HOUR) / SECONDS_IN_MINUTE,
+  );
+  const seconds = totalSeconds % SECONDS_IN_MINUTE;
+  const millis = Math.floor(milliseconds % 1000);
+
+  const timeString =
+    hours > 0
+      ? `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`
+      : minutes > 0
+        ? `${padZero(minutes)}:${padZero(seconds)}`
+        : `${seconds}`;
+
+  if (showMilliseconds) {
+    return `${timeString}.${String(millis).padStart(3, "0")}`;
+  }
+
+  return timeString;
+}
+
+export function formatSpeedForFactor(pace: number, factor: number) {
+  return ((1 / pace) * factor).toFixed(2);
+}
+
+const MILLISECONDS_FACTOR = 1;
+const SECONDS_FACTOR = 1000;
+const MINUTES_FACTOR = SECONDS_IN_MINUTE * SECONDS_FACTOR;
+const HOURS_FACTOR = SECONDS_IN_HOUR * SECONDS_FACTOR;
+
+export function timeFactorFromIndex(
+  index: number,
+  timeString: ValidTimeString,
 ) {
-  return (timeInMilliseconds: number) => {
-    const pace = timeInMilliseconds * distanceInMeters;
-    return formatTime(pace, showMilliseconds);
-  };
+  const hasPeriod = timeString.includes(".");
+
+  if (hasPeriod) {
+    if (index > timeString.indexOf(".")) {
+      return MILLISECONDS_FACTOR;
+    }
+  }
+
+  const colonCount = (timeString.match(/:/g) || []).length;
+
+  switch (colonCount) {
+    case 0:
+      return SECONDS_FACTOR;
+
+    case 1:
+      if (index > timeString.indexOf(":")) {
+        return SECONDS_FACTOR;
+      }
+      return MINUTES_FACTOR;
+
+    case 2:
+      if (index > timeString.lastIndexOf(":")) {
+        return SECONDS_FACTOR;
+      }
+      if (index > timeString.indexOf(":")) {
+        return MINUTES_FACTOR;
+      }
+      return HOURS_FACTOR;
+
+    default:
+      throw new Error("Invalid time string");
+  }
 }
-
-export function fromPaceStringForDistance(distanceInMeters: number) {
-  return (paceString: string) => {
-    const pace = parseTimeStringToMillieconds(paceString);
-    return pace / distanceInMeters;
-  };
-}
-
-export const KPH_FACTOR = 3600;
-export const MPH_FACTOR = 3600 / 1.609344;
-
-export function toSpeedString(factor: number) {
-  return (millisecondsPrMeter: number) => {
-    const speed = factor / millisecondsPrMeter;
-    return speed.toFixed(2);
-  };
-}
-
-const stepPace = (
-  direction: "up" | "down",
-  elem: HTMLInputElement,
-  distance: number,
-) => {
-  const timeFactor =
-    (direction === "up" ? 1 : -1) * paceTimeFactorFromCursor(elem);
-  const newPaceValue = parseTimeStringToMillieconds(elem.value) + timeFactor;
-  return newPaceValue / distance;
-};
-
-export const stepPaceForDistance =
-  (distance: number) => (direction: "up" | "down", elem: HTMLInputElement) =>
-    stepPace(direction, elem, distance);

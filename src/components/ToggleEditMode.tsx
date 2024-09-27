@@ -3,7 +3,7 @@ import { useEditMode } from "@/hooks/useEditMode";
 import { motion } from "framer-motion";
 import { Pencil } from "lucide-react";
 
-const MotionButton = motion(Button);
+const MotionButton = motion.create(Button);
 
 export function ToggleEditMode() {
   const { toggleEditMode, isEditMode } = useEditMode();
