@@ -2,9 +2,11 @@ import { TimeInput } from "@/components/TimeInput";
 import type { Distance } from "@/distances";
 import { usePace } from "@/hooks/usePace";
 import { useTimeInputMode } from "@/hooks/useTimeInputMode";
+
 type TimeControlProps = {
   distance: Omit<Distance, "isDefault" | "isVisible">;
 };
+
 export function TimeControl({ distance }: TimeControlProps) {
   const { getTimeForDistance } = usePace();
 

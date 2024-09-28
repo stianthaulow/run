@@ -4,7 +4,7 @@ export const SECONDS_IN_MINUTE = 60;
 export const SECONDS_IN_HOUR = 3600;
 
 export type ValidTimeString = Branded<string, "ValidTimeString">;
-
+export type ValidSpeedString = Branded<string, "ValidSpeedString">;
 export function parseTime(timeString: ValidTimeString) {
   const [mainPart, msPart = "0"] = timeString.split(".");
 
@@ -24,6 +24,14 @@ export function assertValidTimeString(
 ): asserts input is ValidTimeString {
   if (!isValidTime(input)) {
     throw new Error(`Invalid time string: "${input}"`);
+  }
+}
+
+export function assertValidSpeedString(
+  input: string,
+): asserts input is ValidSpeedString {
+  if (!isValidSpeed(input)) {
+    throw new Error(`Invalid speed string: "${input}"`);
   }
 }
 
@@ -72,10 +80,6 @@ export function formatTime(
   return timeString;
 }
 
-export function formatSpeedForFactor(pace: number, factor: number) {
-  return ((1 / pace) * factor).toFixed(2);
-}
-
 const MILLISECONDS_FACTOR = 1;
 const SECONDS_FACTOR = 1000;
 const MINUTES_FACTOR = SECONDS_IN_MINUTE * SECONDS_FACTOR;
@@ -85,36 +89,48 @@ export function timeFactorFromIndex(
   index: number,
   timeString: ValidTimeString,
 ) {
-  const hasPeriod = timeString.includes(".");
+  const periodIndex = timeString.indexOf(".");
+  const hasPeriod = periodIndex !== -1;
 
-  if (hasPeriod) {
-    if (index > timeString.indexOf(".")) {
-      return MILLISECONDS_FACTOR;
+  if (hasPeriod && index > periodIndex) {
+    return MILLISECONDS_FACTOR;
+  }
+
+  const colonIndices: number[] = [];
+  const length = timeString.length;
+  
+  for (let i = 0; i < length && colonIndices.length < 2; i++) {
+    if (timeString[i] === ":") {
+      colonIndices.push(i);
     }
   }
 
-  const colonCount = (timeString.match(/:/g) || []).length;
+  const colonCount = colonIndices.length;
+  const [firstColon, secondColon] = colonIndices;
 
   switch (colonCount) {
     case 0:
       return SECONDS_FACTOR;
 
     case 1:
-      if (index > timeString.indexOf(":")) {
-        return SECONDS_FACTOR;
-      }
-      return MINUTES_FACTOR;
+      return index > firstColon ? SECONDS_FACTOR : MINUTES_FACTOR;
 
     case 2:
-      if (index > timeString.lastIndexOf(":")) {
-        return SECONDS_FACTOR;
-      }
-      if (index > timeString.indexOf(":")) {
-        return MINUTES_FACTOR;
-      }
+      if (index > secondColon) return SECONDS_FACTOR;
+      if (index > firstColon) return MINUTES_FACTOR;
       return HOURS_FACTOR;
 
     default:
       throw new Error("Invalid time string");
   }
+}
+
+export function speedFactorFromIndex(index: number, speedString: ValidSpeedString) {
+  const periodIndex = speedString.indexOf(".");
+  
+  return periodIndex > index ? 1 : 0.1;
+
+  
+
+  
 }

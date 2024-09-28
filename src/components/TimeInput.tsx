@@ -18,7 +18,11 @@ type TimeInputProps = {
 
 export function TimeInput({ stopEditing, distance }: TimeInputProps) {
   const ref = useClickOutside<HTMLInputElement>(stopEditing);
-  const { getTimeForDistance, stepPace, setPaceFromString } = usePace();
+  const {
+    getTimeForDistance,
+    stepPace,
+    setFromPaceString: setPaceFromString,
+  } = usePace();
   const time = getTimeForDistance(distance.length, distance.showMilliseconds);
   const [value, setValue] = useState(time);
 
