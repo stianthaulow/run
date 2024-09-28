@@ -32,5 +32,14 @@ export function usePace() {
     return formatTime(newPace * distance, showMilliseconds);
   };
 
-  return { getTimeForDistance, setPaceFromString, stepPace };
+  const stepPaceUp = () => setPace((prev) => prev + 1);
+  const stepPaceDown = () => setPace((prev) => Math.max(prev - 1, 0));
+
+  return {
+    getTimeForDistance,
+    setPaceFromString,
+    stepPace,
+    stepPaceUp,
+    stepPaceDown,
+  };
 }

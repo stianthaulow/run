@@ -5,7 +5,7 @@ import { Pencil } from "lucide-react";
 
 const MotionButton = motion.create(Button);
 
-export function ToggleEditMode() {
+export function EditModeButton() {
   const { toggleEditMode, isEditMode } = useEditMode();
 
   const wiggleVariants = {
@@ -30,7 +30,7 @@ export function ToggleEditMode() {
   return (
     <MotionButton
       size="icon"
-      className="fixed right-2 bottom-2 size-14 rounded-full"
+      className="fixed right-2 bottom-2 size-16 rounded-full"
       variant="outline"
       onClick={toggleEditMode}
       variants={wiggleVariants}

@@ -1,11 +1,10 @@
+import { EditModeButton } from "@/components/EditModeButton";
 import { LanguageSelector } from "@/components/LanguageSelector";
-import { ToggleEditMode } from "@/components/ToggleEditMode";
+import { PaceSlider } from "@/components/PaceSlider";
 import { Card } from "@/components/ui/card";
 import { editModeTransition, useEditMode } from "@/hooks/useEditMode";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { AnimatePresence, motion } from "framer-motion";
-import { Minus, Plus } from "lucide-react";
-import { Button } from "./ui/button";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -22,7 +21,7 @@ export function Layout({ children }: LayoutProps) {
   };
 
   return (
-    <div className="flex min-h-screen justify-between p-2">
+    <div className="flex min-h-svh justify-between p-2">
       <main className="w-full">
         {isTabletOrLarger ? (
           <Card className="w-full max-w-md p-6">{children}</Card>
@@ -43,18 +42,9 @@ export function Layout({ children }: LayoutProps) {
             <LanguageSelector />
           </motion.div>
         )}
-        {!isEditMode && (
-          <div className="mr-2 mb-20 flex flex-grow flex-col justify-between border border-zinc-900">
-            <Button size="icon" className="rounded-full">
-              <Plus />
-            </Button>
-            <Button size="icon" className="rounded-full">
-              <Minus />
-            </Button>
-          </div>
-        )}
+        {!isEditMode && <PaceSlider />}
       </AnimatePresence>
-      <ToggleEditMode />
+      <EditModeButton />
     </div>
   );
 }
