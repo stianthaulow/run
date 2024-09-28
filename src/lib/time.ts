@@ -98,7 +98,7 @@ export function timeFactorFromIndex(
 
   const colonIndices: number[] = [];
   const length = timeString.length;
-  
+
   for (let i = 0; i < length && colonIndices.length < 2; i++) {
     if (timeString[i] === ":") {
       colonIndices.push(i);
@@ -125,12 +125,11 @@ export function timeFactorFromIndex(
   }
 }
 
-export function speedFactorFromIndex(index: number, speedString: ValidSpeedString) {
+export function speedFactorFromIndex(
+  index: number,
+  speedString: ValidSpeedString,
+) {
   const periodIndex = speedString.indexOf(".");
-  
+
   return periodIndex > index ? 1 : 0.1;
-
-  
-
-  
 }
