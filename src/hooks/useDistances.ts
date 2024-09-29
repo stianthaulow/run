@@ -28,8 +28,10 @@ type DistanceAction =
 
 function distanceReducer(distances: Distance[], action: DistanceAction) {
   switch (action.type) {
-    case "add":
-      return [...distances, action.distance];
+    case "add": {
+      const newDistances = [...distances, action.distance];
+      return newDistances.sort((a, b) => a.length - b.length);
+    }
     case "toggle":
       return distances.map((distance) =>
         distance.length === action.length
@@ -85,6 +87,9 @@ export function useDistances() {
   const deleteDistance = (length: number) =>
     setDistances((prev) => distanceReducer(prev, { type: "delete", length }));
 
+  const distanceExists = (length: number) =>
+    distances.some((d) => d.length === length);
+
   return {
     distances: translatedDistances,
     visibleDistances,
@@ -92,5 +97,6 @@ export function useDistances() {
     toggleVisibility,
     toggleMilliseconds,
     deleteDistance,
+    distanceExists,
   };
 }

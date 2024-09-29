@@ -36,6 +36,7 @@ const noTranslation = {
     showMillisecondsLabel: "Vis millisekunder",
     save: "Lagre",
     close: "Lukk",
+    distanceExists: "Distansen eksisterer allerede",
   },
   settings: {
     title: "Innstillinger",
@@ -77,6 +78,7 @@ const enTranslation: typeof noTranslation = {
     showMillisecondsLabel: "Show milliseconds",
     save: "Save",
     close: "Close",
+    distanceExists: "Distance already exists",
   },
   settings: {
     title: "Settings",

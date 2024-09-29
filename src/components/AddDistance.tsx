@@ -120,7 +120,7 @@ function AddForm({
   onSuccess,
 }: React.ComponentProps<"form"> & { onSuccess: () => void }) {
   const { t } = useTranslation();
-  const { addDistance } = useDistances();
+  const { addDistance, distanceExists } = useDistances();
   const form = useForm<z.infer<typeof addFormSchema>>({
     resolver: zodResolver(addFormSchema),
     defaultValues: {
@@ -131,11 +131,19 @@ function AddForm({
   });
 
   function onSubmit(data: z.infer<typeof addFormSchema>) {
+    if (distanceExists(data.distance)) {
+      form.setError("distance", {
+        type: "manual",
+        message: t("addDistance.distanceExists"),
+      });
+      return;
+    }
+
     addDistance({
       length: data.distance,
       label: data.label,
       isVisible: true,
-      showMilliseconds: false,
+      showMilliseconds: data.showMilliseconds,
       isDefault: false,
     });
     onSuccess();
