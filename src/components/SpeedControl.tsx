@@ -21,7 +21,7 @@ export function SpeedControl({ unit }: SpeedControlProps) {
       ) : (
         <button
           type="button"
-          className="rounded pb-1 text-3xl focus:outline-dotted focus:outline-2 focus:outline-zinc-500 focus:outline-offset-2"
+          className="rounded pb-1 text-2xl focus:outline-dotted focus:outline-2 focus:outline-zinc-500 focus:outline-offset-2"
           onClick={tryStartTimeInputMode}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
