@@ -9,15 +9,14 @@ export function PaceSlider() {
   const { stepPaceUp, stepPaceDown } = usePace();
 
   useEffect(() => {
-    // Define the event handler with proper type annotation
     const preventDefault = (e: TouchEvent) => {
-      e.preventDefault();
+      if (e.target instanceof Element && e.target.id === "pace-slider") {
+        e.preventDefault();
+      }
     };
 
-    // Add the event listener with { passive: false } to allow preventDefault
     window.addEventListener("touchmove", preventDefault, { passive: false });
 
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("touchmove", preventDefault);
     };
@@ -25,6 +24,7 @@ export function PaceSlider() {
 
   return (
     <div
+      id="pace-slider"
       className="flex w-20 flex-col items-center justify-between rounded-full border border-zinc-900 py-2 transition-all duration-200"
       style={{ height: "calc(100dvh - 6rem )" }}
       onTouchStart={(e) => {
