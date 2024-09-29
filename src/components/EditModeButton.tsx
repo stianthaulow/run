@@ -30,7 +30,7 @@ export function EditModeButton() {
   return (
     <MotionButton
       size="icon"
-      className="fixed right-2 bottom-2 size-16 rounded-full"
+      className="size-16 rounded-full"
       variant="outline"
       onClick={toggleEditMode}
       variants={wiggleVariants}

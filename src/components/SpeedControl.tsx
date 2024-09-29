@@ -1,5 +1,5 @@
-import { usePace } from "@/hooks/usePace";
 import { useInputMode } from "@/hooks/useInputMode";
+import { usePace } from "@/hooks/usePace";
 import { useTranslation } from "react-i18next";
 import { SpeedInput } from "./SpeedInput";
 

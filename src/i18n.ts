@@ -37,6 +37,13 @@ const noTranslation = {
     save: "Lagre",
     close: "Lukk",
   },
+  settings: {
+    title: "Innstillinger",
+    description: "Endre innstillinger",
+    showSpeedFirst: "Vis hastighet først",
+    save: "Lagre",
+    close: "Lukk",
+  },
 };
 
 const enTranslation: typeof noTranslation = {
@@ -67,6 +74,13 @@ const enTranslation: typeof noTranslation = {
     distanceFormLabel: "Distance (in meters)",
     labelFormLabel: "Label",
     showMillisecondsLabel: "Show milliseconds",
+    save: "Save",
+    close: "Close",
+  },
+  settings: {
+    title: "Settings",
+    description: "Change settings",
+    showSpeedFirst: "Show speed first",
     save: "Save",
     close: "Close",
   },

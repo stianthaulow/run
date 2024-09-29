@@ -1,16 +1,24 @@
 import { DistanceList } from "@/components/DistanceList";
 import { Layout } from "@/components/Layout";
+import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { SpeedControl } from "./components/SpeedControl";
 import { TimeControl } from "./components/TimeControl";
+import { useSettings } from "./hooks/useSettings";
 
 function App() {
   const { t } = useTranslation();
+  const { settings } = useSettings();
 
   return (
     <Layout>
       <div className="flex gap-4">
-        <div>
+        <div
+          className={cn(
+            "flex-1",
+            settings.showSpeedFirst ? "order-2" : "order-1",
+          )}
+        >
           <h1>{t("pace")}</h1>
           <TimeControl
             distance={{
@@ -27,7 +35,12 @@ function App() {
             }}
           />
         </div>
-        <div>
+        <div
+          className={cn(
+            "flex-1",
+            settings.showSpeedFirst ? "order-1" : "order-2",
+          )}
+        >
           <h1>{t("speed")}</h1>
           <SpeedControl unit="kph" />
           <SpeedControl unit="mph" />
