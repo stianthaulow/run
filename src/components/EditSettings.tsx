@@ -90,6 +90,7 @@ export function EditSettings() {
 
 const settingsFormSchema = z.object({
   showSpeedFirst: z.boolean(),
+  showMiles: z.boolean(),
 });
 
 function SettingsForm({ className }: React.ComponentProps<"form">) {
@@ -123,6 +124,21 @@ function SettingsForm({ className }: React.ComponentProps<"form">) {
                 />
               </FormControl>
               <FormLabel>{t("settings.showSpeedFirst")}</FormLabel>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="showMiles"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center space-x-2 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel>{t("settings.showMiles")}</FormLabel>
             </FormItem>
           )}
         />

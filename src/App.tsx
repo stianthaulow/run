@@ -27,13 +27,15 @@ function App() {
               showMilliseconds: false,
             }}
           />
-          <TimeControl
-            distance={{
-              length: 1609.34,
-              label: t("minprmile"),
-              showMilliseconds: false,
-            }}
-          />
+          {settings.showMiles && (
+            <TimeControl
+              distance={{
+                length: 1609.34,
+                label: t("minprmile"),
+                showMilliseconds: false,
+              }}
+            />
+          )}
         </div>
         <div
           className={cn(
@@ -43,7 +45,7 @@ function App() {
         >
           <h1>{t("speed")}</h1>
           <SpeedControl unit="kph" />
-          <SpeedControl unit="mph" />
+          {settings.showMiles && <SpeedControl unit="mph" />}
         </div>
       </div>
       {t("distances")}
