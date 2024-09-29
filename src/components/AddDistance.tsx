@@ -115,7 +115,10 @@ const addFormSchema = z.object({
   showMilliseconds: z.boolean(),
 });
 
-function AddForm({ className, onSuccess }: React.ComponentProps<"form"> & { onSuccess: () => void }) {
+function AddForm({
+  className,
+  onSuccess,
+}: React.ComponentProps<"form"> & { onSuccess: () => void }) {
   const { t } = useTranslation();
   const { addDistance } = useDistances();
   const form = useForm<z.infer<typeof addFormSchema>>({
