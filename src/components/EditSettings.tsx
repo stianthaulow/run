@@ -59,7 +59,7 @@ export function EditSettings() {
             <DialogTitle>{t("settings.title")}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
-          <SettingsForm />
+          <SettingsForm onSuccess={() => setOpen(false)} />
         </DialogContent>
       </Dialog>
     );
@@ -77,7 +77,7 @@ export function EditSettings() {
           <DrawerTitle>{t("settings.title")}</DrawerTitle>
           <DrawerDescription>{description}</DrawerDescription>
         </DrawerHeader>
-        <SettingsForm className="px-4" />
+        <SettingsForm className="px-4" onSuccess={() => setOpen(false)} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">{t("settings.close")}</Button>
@@ -93,7 +93,10 @@ const settingsFormSchema = z.object({
   showMiles: z.boolean(),
 });
 
-function SettingsForm({ className }: React.ComponentProps<"form">) {
+function SettingsForm({
+  className,
+  onSuccess,
+}: React.ComponentProps<"form"> & { onSuccess: () => void }) {
   const { t } = useTranslation();
   const { settings, setSettings } = useSettings();
 
@@ -104,6 +107,7 @@ function SettingsForm({ className }: React.ComponentProps<"form">) {
 
   function onSubmit(data: z.infer<typeof settingsFormSchema>) {
     setSettings(data);
+    onSuccess();
   }
 
   return (

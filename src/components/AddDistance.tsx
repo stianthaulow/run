@@ -60,7 +60,7 @@ export function AddDistance() {
             <DialogTitle>{t("addDistance.title")}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
-          <AddForm />
+          <AddForm onSuccess={() => setOpen(false)} />
         </DialogContent>
       </Dialog>
     );
@@ -79,7 +79,7 @@ export function AddDistance() {
           <DrawerDescription>{description}</DrawerDescription>
         </DrawerHeader>
         <DefaultDistances />
-        <AddForm className="px-4" />
+        <AddForm className="px-4" onSuccess={() => setOpen(false)} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">{t("addDistance.close")}</Button>
@@ -115,7 +115,7 @@ const addFormSchema = z.object({
   showMilliseconds: z.boolean(),
 });
 
-function AddForm({ className }: React.ComponentProps<"form">) {
+function AddForm({ className, onSuccess }: React.ComponentProps<"form"> & { onSuccess: () => void }) {
   const { t } = useTranslation();
   const { addDistance } = useDistances();
   const form = useForm<z.infer<typeof addFormSchema>>({
@@ -135,6 +135,7 @@ function AddForm({ className }: React.ComponentProps<"form">) {
       showMilliseconds: false,
       isDefault: false,
     });
+    onSuccess();
   }
 
   return (
