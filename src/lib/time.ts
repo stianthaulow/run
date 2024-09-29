@@ -5,6 +5,7 @@ export const SECONDS_IN_HOUR = 3600;
 
 export type ValidTimeString = Branded<string, "ValidTimeString">;
 export type ValidSpeedString = Branded<string, "ValidSpeedString">;
+
 export function parseTime(timeString: ValidTimeString) {
   const [mainPart, msPart = "0"] = timeString.split(".");
 
@@ -46,7 +47,7 @@ export function isValidTime(input: string): input is ValidTimeString {
   return validTimeRegExp.test(input);
 }
 
-export function isValidSpeed(input: string) {
+export function isValidSpeed(input: string): input is ValidSpeedString {
   return validSpeedRegExp.test(input);
 }
 

@@ -1,4 +1,9 @@
-import { type ValidTimeString, formatTime, parseTime } from "@/lib/time";
+import {
+  type ValidSpeedString,
+  type ValidTimeString,
+  formatTime,
+  parseTime,
+} from "@/lib/time";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useCallback } from "react";
@@ -34,6 +39,16 @@ export function usePace() {
     [setPace],
   );
 
+  const setFromSpeedString = useCallback(
+    (speedString: ValidSpeedString, unit: "kph" | "mph") => {
+      const factor = unit === "mph" ? METERS_IN_KM / METERS_IN_MILE : 1;
+      const speed = Number(speedString);
+      if (speed < 0) return;
+      setPace((1 / Number(speed)) * SECONDS_IN_HOUR * factor);
+    },
+    [setPace],
+  );
+
   const getTimeForDistance = useCallback(
     (distance: number, showMilliseconds = false) => {
       const time = pace * distance;
@@ -58,6 +73,21 @@ export function usePace() {
     [setPace],
   );
 
+  const stepSpeed = useCallback(
+    (
+      direction: 1 | -1,
+      speed: ValidSpeedString,
+      speedFactor: number,
+      unit: "kph" | "mph",
+    ) => {
+      const newSpeed = Number(speed) + direction * speedFactor;
+      if (newSpeed < 0) return speed;
+      setPace(newSpeed * (unit === "kph" ? METERS_IN_KM : METERS_IN_MILE));
+      return unit === "kph" ? kph : mph;
+    },
+    [setPace, kph, mph],
+  );
+
   const stepPaceUp = useCallback(() => setPace((prev) => prev + 1), [setPace]);
   const stepPaceDown = useCallback(
     () => setPace((prev) => Math.max(prev - 1, 0)),
@@ -67,9 +97,11 @@ export function usePace() {
   return {
     getTimeForDistance,
     setFromPaceString,
+    setFromSpeedString,
     stepPace,
     stepPaceUp,
     stepPaceDown,
+    stepSpeed,
     kph,
     mph,
   };

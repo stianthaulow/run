@@ -1,12 +1,12 @@
 import { DistanceList } from "@/components/DistanceList";
 import { Layout } from "@/components/Layout";
-import { usePace } from "@/hooks/usePace";
 import { useTranslation } from "react-i18next";
+import { SpeedControl } from "./components/SpeedControl";
 import { TimeControl } from "./components/TimeControl";
 
 function App() {
   const { t } = useTranslation();
-  const { kph, mph } = usePace();
+
   return (
     <Layout>
       <div className="flex gap-4">
@@ -19,11 +19,18 @@ function App() {
               showMilliseconds: false,
             }}
           />
+          <TimeControl
+            distance={{
+              length: 1609.34,
+              label: t("minprmile"),
+              showMilliseconds: false,
+            }}
+          />
         </div>
         <div>
           <h1>{t("speed")}</h1>
-          <div>{kph}</div>
-          <div>{mph}</div>
+          <SpeedControl unit="kph" />
+          <SpeedControl unit="mph" />
         </div>
       </div>
       {t("distances")}

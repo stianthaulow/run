@@ -11,7 +11,9 @@ const noTranslation = {
   speed: "Hastighet",
   distances: "Distanser",
   kph: "km/t",
+  mph: "mph",
   minprkm: "min/km",
+  minprmile: "min/mile",
   marathon: "Maraton",
   halfMarathon: "Halvmaraton",
   language: {
@@ -42,7 +44,9 @@ const enTranslation: typeof noTranslation = {
   speed: "Speed",
   distances: "Distances",
   minprkm: "min/km",
+  minprmile: "min/mile",
   kph: "kph",
+  mph: "mph",
   marathon: "Marathon",
   halfMarathon: "Half Marathon",
   language: {
