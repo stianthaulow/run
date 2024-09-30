@@ -80,12 +80,15 @@ export function usePace() {
       speedFactor: number,
       unit: "kph" | "mph",
     ) => {
-      const newSpeed = Number(speed) + direction * speedFactor;
+      const newSpeed =
+        Math.round((Number(speed) + direction * speedFactor) * 100) / 100;
+      const conversionFactor =
+        unit === "mph" ? METERS_IN_KM / METERS_IN_MILE : 1;
       if (newSpeed < 0) return speed;
-      setPace(newSpeed * (unit === "kph" ? METERS_IN_KM : METERS_IN_MILE));
-      return unit === "kph" ? kph : mph;
+      setPace((1 / Number(newSpeed)) * SECONDS_IN_HOUR * conversionFactor);
+      return newSpeed.toFixed(2);
     },
-    [setPace, kph, mph],
+    [setPace],
   );
 
   const stepPaceUp = useCallback(() => setPace((prev) => prev + 1), [setPace]);

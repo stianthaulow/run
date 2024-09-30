@@ -132,5 +132,5 @@ export function speedFactorFromIndex(
 ) {
   const periodIndex = speedString.indexOf(".");
 
-  return periodIndex > index ? 1 : 0.1;
+  return periodIndex >= index ? 1 : 0.01;
 }
