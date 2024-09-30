@@ -66,7 +66,7 @@ export function usePace() {
       showMilliseconds: boolean,
     ) => {
       const newPace = (parseTime(time) + direction * timeFactor) / distance;
-      if (newPace < 0) return time;
+      if (newPace <= 0) return time;
       setPace(newPace);
       return formatTime(newPace * distance, showMilliseconds);
     },
@@ -84,7 +84,7 @@ export function usePace() {
         Math.round((Number(speed) + direction * speedFactor) * 100) / 100;
       const conversionFactor =
         unit === "mph" ? METERS_IN_KM / METERS_IN_MILE : 1;
-      if (newSpeed < 0) return speed;
+      if (newSpeed <= 0) return speed;
       setPace((1 / Number(newSpeed)) * SECONDS_IN_HOUR * conversionFactor);
       return newSpeed.toFixed(2);
     },
