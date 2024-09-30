@@ -1,26 +1,50 @@
 import { Button } from "@/components/ui/button";
+import { useEditMode } from "@/hooks/useEditMode";
 import useHoldButton from "@/hooks/useHoldButton";
+import { useInputMode } from "@/hooks/useInputMode";
 import { usePace } from "@/hooks/usePace";
 import { Minus, MoveVertical, Plus } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+
+const preventDefault = (e: TouchEvent) => {
+  if (e.target instanceof Element && e.target.id === "pace-slider") {
+    e.preventDefault();
+  }
+};
 
 export function PaceSlider() {
   const startYRef = useRef(0);
   const { stepPaceUp, stepPaceDown } = usePace();
+  const { isEditMode } = useEditMode();
+  const { isInputMode } = useInputMode();
+
+  const stepOnScroll = useCallback(
+    (e: WheelEvent) => {
+      if (isEditMode || isInputMode) return;
+      if (e.deltaY < 0) {
+        stepPaceUp();
+      } else {
+        stepPaceDown();
+      }
+    },
+    [isEditMode, isInputMode, stepPaceDown, stepPaceUp],
+  );
 
   useEffect(() => {
-    const preventDefault = (e: TouchEvent) => {
-      if (e.target instanceof Element && e.target.id === "pace-slider") {
-        e.preventDefault();
-      }
-    };
-
     window.addEventListener("touchmove", preventDefault, { passive: false });
 
     return () => {
       window.removeEventListener("touchmove", preventDefault);
     };
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("wheel", stepOnScroll, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", stepOnScroll);
+    };
+  }, [stepOnScroll]);
 
   return (
     <div
