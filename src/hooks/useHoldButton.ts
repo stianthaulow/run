@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
-const useHoldButton = (callbackFn: () => void) => {
+export function useHoldButton(callbackFn: () => void) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -31,6 +31,4 @@ const useHoldButton = (callbackFn: () => void) => {
     onMouseUp: stop,
     onMouseLeave: stop,
   };
-};
-
-export default useHoldButton;
+}
