@@ -118,7 +118,8 @@ export function TimeInput({ stopEditing, distance }: TimeInputProps) {
       }}
       onKeyDown={handleKeyDown}
       onWheel={handleWheel}
-      className="max-w-32 text-2xl invalid:bg-red-800 "
+      className="w-auto min-w-10 max-w-32 p-0 px-1 text-2xl invalid:bg-red-800"
+      style={{ width: `${value.length}ch` }}
     />
   );
 }
