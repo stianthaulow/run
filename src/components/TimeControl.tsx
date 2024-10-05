@@ -13,25 +13,20 @@ export function TimeControl({ distance }: TimeControlProps) {
   const { isInputMode, tryStartInputMode, stopInputMode } = useInputMode();
 
   const time = getTimeForDistance(distance.length, distance.showMilliseconds);
-  return (
-    <div className="flex items-baseline gap-1">
-      {isInputMode ? (
-        <TimeInput stopEditing={stopInputMode} distance={distance} />
-      ) : (
-        <button
-          type="button"
-          className="rounded pb-1 text-2xl focus:outline-dotted focus:outline-2 focus:outline-zinc-500 focus:outline-offset-2"
-          onClick={tryStartInputMode}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              tryStartInputMode();
-            }
-          }}
-        >
-          {time}
-        </button>
-      )}
-      <span className="text-lg text-zinc-300">{distance.label}</span>
-    </div>
+  return isInputMode ? (
+    <TimeInput stopEditing={stopInputMode} distance={distance} />
+  ) : (
+    <button
+      type="button"
+      className="rounded text-left text-2xl focus:outline-dotted focus:outline-2 focus:outline-zinc-500 focus:outline-offset-2"
+      onClick={tryStartInputMode}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          tryStartInputMode();
+        }
+      }}
+    >
+      {time}
+    </button>
   );
 }

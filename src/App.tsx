@@ -1,10 +1,11 @@
 import { DistanceList } from "@/components/DistanceList";
 import { Layout } from "@/components/Layout";
+import { SpeedControl } from "@/components/SpeedControl";
+import { TimeControl } from "@/components/TimeControl";
+import { Label } from "@/components/ui/label";
+import { useSettings } from "@/hooks/useSettings";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
-import { SpeedControl } from "./components/SpeedControl";
-import { TimeControl } from "./components/TimeControl";
-import { useSettings } from "./hooks/useSettings";
 
 function App() {
   const { t } = useTranslation();
@@ -20,21 +21,29 @@ function App() {
           )}
         >
           <h1>{t("pace")}</h1>
-          <TimeControl
-            distance={{
-              length: 1000,
-              label: t("minprkm"),
-              showMilliseconds: false,
-            }}
-          />
-          {settings.showMiles && (
+          <div className="flex items-baseline">
             <TimeControl
               distance={{
-                length: 1609.34,
-                label: t("minprmile"),
+                length: 1000,
+                label: t("minprkm"),
                 showMilliseconds: false,
               }}
             />
+            <Label className="pl-1 text-lg text-zinc-300">{t("minprkm")}</Label>
+          </div>
+          {settings.showMiles && (
+            <div className="flex items-baseline">
+              <TimeControl
+                distance={{
+                  length: 1609.34,
+                  label: t("minprmile"),
+                  showMilliseconds: false,
+                }}
+              />
+              <Label className="pl-1 text-lg text-zinc-300">
+                {t("minprmile")}
+              </Label>
+            </div>
           )}
         </div>
         <div
@@ -44,8 +53,16 @@ function App() {
           )}
         >
           <h1>{t("speed")}</h1>
-          <SpeedControl unit="kph" />
-          {settings.showMiles && <SpeedControl unit="mph" />}
+          <div className="flex items-baseline">
+            <SpeedControl unit="kph" />
+            <Label className="pl-1 text-lg text-zinc-300">{t("kph")}</Label>
+          </div>
+          {settings.showMiles && (
+            <div className="flex items-baseline">
+              <SpeedControl unit="mph" />
+              <Label className="pl-1 text-lg text-zinc-300">{t("mph")}</Label>
+            </div>
+          )}
         </div>
       </div>
       {t("distances")}

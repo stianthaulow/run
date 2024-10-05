@@ -5,8 +5,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useDistances } from "@/hooks/useDistances";
 import { useEditMode } from "@/hooks/useEditMode";
+import { cn } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Fragment } from "react/jsx-runtime";
 
 export function DistanceList() {
   const { visibleDistances, deleteDistance, toggleMilliseconds } =
@@ -14,37 +16,40 @@ export function DistanceList() {
   const { isEditMode } = useEditMode();
 
   return (
-    <>
-      <ul className="flex flex-col gap-2">
-        {visibleDistances.map((distance) => (
-          <li
-            key={distance.length}
-            className="flex w-full items-center justify-between gap-2"
-          >
-            <div className="flex items-center gap-2">
-              {isEditMode && (
-                <DeleteButton
-                  handleDelete={() => deleteDistance(distance.length)}
-                  distanceLength={distance.length}
-                />
-              )}
+    <div
+      className={cn([
+        "grid",
+        isEditMode
+          ? "grid-cols-[auto_max-content_auto_auto]"
+          : "grid-cols-[max-content_auto]",
+      ])}
+    >
+      {visibleDistances.map((distance) => (
+        <Fragment key={distance.length}>
+          {isEditMode && (
+            <DeleteButton
+              handleDelete={() => deleteDistance(distance.length)}
+              distanceLength={distance.length}
+            />
+          )}
 
-              <TimeControl distance={distance} />
-            </div>
+          <TimeControl distance={distance} />
+          <Label className="pt-2 pl-2 text-lg text-zinc-300">
+            {distance.label}
+          </Label>
 
-            {isEditMode && (
-              <ShowMsCheckbox
-                checked={distance.showMilliseconds}
-                handleCheckedChange={() => toggleMilliseconds(distance.length)}
-                distanceLength={distance.length.toString()}
-              />
-            )}
-          </li>
-        ))}
-      </ul>
+          {isEditMode && (
+            <ShowMsCheckbox
+              checked={distance.showMilliseconds}
+              handleCheckedChange={() => toggleMilliseconds(distance.length)}
+              distanceLength={distance.length.toString()}
+            />
+          )}
+        </Fragment>
+      ))}
 
       {isEditMode && <AddDistance />}
-    </>
+    </div>
   );
 }
 
