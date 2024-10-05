@@ -1,5 +1,6 @@
 import { EditModeButton } from "@/components/EditModeButton";
 import { EditSettings } from "@/components/EditSettings";
+import { Help } from "@/components/Help";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { PaceSlider } from "@/components/PaceSlider";
 import { Card } from "@/components/ui/card";
@@ -33,6 +34,9 @@ export function Layout({ children }: LayoutProps) {
       <div className="fixed right-2 bottom-2 flex gap-2">
         {isEditMode && <EditSettings />}
         <EditModeButton />
+      </div>
+      <div className="fixed bottom-2 left-2">
+        <Help />
       </div>
     </div>
   );

@@ -46,6 +46,9 @@ const noTranslation = {
     save: "Lagre",
     close: "Lukk",
   },
+  help: {
+    title: "Hjelp",
+  },
 };
 
 const enTranslation: typeof noTranslation = {
@@ -87,6 +90,9 @@ const enTranslation: typeof noTranslation = {
     showMiles: "Show minutes pr mile and mph",
     save: "Save",
     close: "Close",
+  },
+  help: {
+    title: "Help",
   },
 };
 

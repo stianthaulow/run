@@ -19,7 +19,11 @@ export function LanguageSelector() {
     i18n.changeLanguage("en");
   }
 
-  const flag = i18n.language === "no" ? norwegianFlag : englishFlag;
+  const norwegianCodes = ["no", "nb", "no-NB", "nn", "nb-NO", "no-NO"];
+
+  const flag = norwegianCodes.includes(i18n.language)
+    ? norwegianFlag
+    : englishFlag;
 
   return (
     <DropdownMenu>

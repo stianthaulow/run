@@ -1,8 +1,8 @@
+import { InputButton } from "@/components/InputButton";
 import { TimeInput } from "@/components/TimeInput";
 import type { Distance } from "@/distances";
 import { useInputMode } from "@/hooks/useInputMode";
 import { usePace } from "@/hooks/usePace";
-import { InputButton } from "./InputButton";
 
 type TimeControlProps = {
   distance: Omit<Distance, "isDefault" | "isVisible">;
