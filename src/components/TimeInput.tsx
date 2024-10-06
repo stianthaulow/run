@@ -18,11 +18,8 @@ type TimeInputProps = {
 
 export function TimeInput({ stopEditing, distance }: TimeInputProps) {
   const ref = useClickOutside<HTMLInputElement>(stopEditing);
-  const {
-    getTimeForDistance,
-    stepPace,
-    setFromPaceString: setPaceFromString,
-  } = usePace();
+  const { getTimeForDistance, stepPaceFromString, setFromPaceString } =
+    usePace();
   const time = getTimeForDistance(distance.length, distance.showMilliseconds);
   const [value, setValue] = useState(time);
 
@@ -32,7 +29,7 @@ export function TimeInput({ stopEditing, distance }: TimeInputProps) {
     (direction: 1 | -1, cursorPosition: number) => {
       if (isValidTime(value)) {
         const timeFactor = timeFactorFromIndex(cursorPosition, value);
-        const newTime = stepPace(
+        const newTime = stepPaceFromString(
           direction,
           value,
           distance.length,
@@ -42,7 +39,7 @@ export function TimeInput({ stopEditing, distance }: TimeInputProps) {
         setValue(newTime);
       }
     },
-    [value, distance.length, distance.showMilliseconds, stepPace],
+    [value, distance.length, distance.showMilliseconds, stepPaceFromString],
   );
 
   const handleWheel = (e: WheelEvent<HTMLInputElement>) => {
@@ -88,9 +85,9 @@ export function TimeInput({ stopEditing, distance }: TimeInputProps) {
   // Update pace when value changes
   useEffect(() => {
     if (isValidTime(value)) {
-      setPaceFromString(value, distance.length);
+      setFromPaceString(value, distance.length);
     }
-  }, [value, distance.length, setPaceFromString]);
+  }, [value, distance.length, setFromPaceString]);
 
   // Restore cursor position when value changes
   useEffect(() => {

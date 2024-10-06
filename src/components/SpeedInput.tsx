@@ -21,7 +21,7 @@ type SpeedInputProps = {
 
 export function SpeedInput({ stopEditing, unit }: SpeedInputProps) {
   const ref = useClickOutside<HTMLInputElement>(stopEditing);
-  const { kph, mph, stepSpeed, setFromSpeedString } = usePace();
+  const { kph, mph, stepSpeedFromString, setFromSpeedString } = usePace();
 
   const [value, setValue] = useState(unit === "kph" ? kph : mph);
 
@@ -31,11 +31,16 @@ export function SpeedInput({ stopEditing, unit }: SpeedInputProps) {
     (direction: 1 | -1, cursorPosition: number) => {
       if (isValidSpeed(value)) {
         const speedFactor = speedFactorFromIndex(cursorPosition, value);
-        const newSpeed = stepSpeed(direction, value, speedFactor, unit);
+        const newSpeed = stepSpeedFromString(
+          direction,
+          value,
+          speedFactor,
+          unit,
+        );
         setValue(newSpeed);
       }
     },
-    [value, unit, stepSpeed],
+    [value, unit, stepSpeedFromString],
   );
 
   const handleWheel = (e: WheelEvent<HTMLInputElement>) => {

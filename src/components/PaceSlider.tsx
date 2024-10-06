@@ -14,20 +14,16 @@ const preventDefault = (e: TouchEvent) => {
 
 export function PaceSlider() {
   const startYRef = useRef(0);
-  const { stepPaceUp, stepPaceDown } = usePace();
+  const { stepPace } = usePace();
   const { isEditMode } = useEditMode();
   const { isInputMode } = useInputMode();
 
   const stepOnScroll = useCallback(
     (e: WheelEvent) => {
       if (isEditMode || isInputMode) return;
-      if (e.deltaY < 0) {
-        stepPaceUp();
-      } else {
-        stepPaceDown();
-      }
+      stepPace(e.deltaY > 0 ? -1 : 1);
     },
-    [isEditMode, isInputMode, stepPaceDown, stepPaceUp],
+    [isEditMode, isInputMode, stepPace],
   );
 
   useEffect(() => {
@@ -56,18 +52,15 @@ export function PaceSlider() {
       }}
       onTouchMove={(e) => {
         const currentY = e.touches[0].clientY;
-        if (currentY < startYRef.current) {
-          stepPaceUp();
-        } else {
-          stepPaceDown();
-        }
+        const deltaY = currentY - startYRef.current;
+        stepPace(deltaY * 0.005);
       }}
     >
-      <StepPaceButton paceStepHandler={stepPaceUp}>
+      <StepPaceButton paceStepHandler={() => stepPace(1)}>
         <Plus />
       </StepPaceButton>
       <MoveVertical className="text-zinc-700" />
-      <StepPaceButton paceStepHandler={stepPaceDown}>
+      <StepPaceButton paceStepHandler={() => stepPace(-1)}>
         <Minus />
       </StepPaceButton>
     </div>

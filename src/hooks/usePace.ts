@@ -57,7 +57,7 @@ export function usePace() {
     [pace],
   );
 
-  const stepPace = useCallback(
+  const stepPaceFromString = useCallback(
     (
       direction: 1 | -1,
       time: ValidTimeString,
@@ -73,7 +73,7 @@ export function usePace() {
     [setPace],
   );
 
-  const stepSpeed = useCallback(
+  const stepSpeedFromString = useCallback(
     (
       direction: 1 | -1,
       speed: ValidSpeedString,
@@ -91,9 +91,8 @@ export function usePace() {
     [setPace],
   );
 
-  const stepPaceUp = useCallback(() => setPace((prev) => prev + 1), [setPace]);
-  const stepPaceDown = useCallback(
-    () => setPace((prev) => Math.max(prev - 1, 0)),
+  const stepPace = useCallback(
+    (amount = 1) => setPace((prev) => Math.max(prev - amount, 0)),
     [setPace],
   );
 
@@ -101,10 +100,9 @@ export function usePace() {
     getTimeForDistance,
     setFromPaceString,
     setFromSpeedString,
+    stepPaceFromString,
+    stepSpeedFromString,
     stepPace,
-    stepPaceUp,
-    stepPaceDown,
-    stepSpeed,
     kph,
     mph,
   };
