@@ -56,11 +56,11 @@ export function PaceSlider() {
         stepPace(deltaY * 0.005);
       }}
     >
-      <StepPaceButton paceStepHandler={() => stepPace(1)}>
+      <StepPaceButton paceStepHandler={() => stepPace(-1)}>
         <Plus />
       </StepPaceButton>
       <MoveVertical className="text-zinc-700" />
-      <StepPaceButton paceStepHandler={() => stepPace(-1)}>
+      <StepPaceButton paceStepHandler={() => stepPace(1)}>
         <Minus />
       </StepPaceButton>
     </div>
