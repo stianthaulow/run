@@ -49,6 +49,13 @@ const noTranslation = {
   },
   help: {
     title: "Hjelp",
+    howToUse: "Hvordan bruke?",
+    instructionsMobile:
+      "For å justere pace eller hastighet kan du enten klikke på et av feltene for å redigere, dra fingeren opp og ned langs slideren på høyre side, eller bruke + og - knappene.",
+    howToEdit:
+      "Klikk på blyanten nede til høyre for å slette eller legge til distanser. Da finner du også et tannhjul du kan klikke på for å endre instillinger",
+    splits:
+      "Hvis splittider er slått på i instillinger så kan du klikke på stoppeklokkeikonet ved hver distanse for å se splittider for den distansen.",
   },
   splits: {
     title: "Splittider",
@@ -103,6 +110,13 @@ const enTranslation: typeof noTranslation = {
   },
   help: {
     title: "Help",
+    howToUse: "How to use?",
+    instructionsMobile:
+      "To adjust the pace or speed, you can either tap one of the fields to edit, touch and drag your finger up or down on the slider to the right, or use the + and - buttons",
+    howToEdit:
+      "Tap the pencil in the bottom right to add or remove distances. Then you will also find a gear icon that you can tap to change settings.",
+    splits:
+      "If split times is emabled in settings, you can tap the stopwatch icon next to each distance to view split times for that distance.",
   },
   splits: {
     title: "Split times",
