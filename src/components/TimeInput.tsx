@@ -14,6 +14,7 @@ import {
 type TimeInputProps = {
   stopEditing: () => void;
   distance: Pick<Distance, "length" | "showMilliseconds">;
+  className?: string;
 };
 
 export function TimeInput({ stopEditing, distance }: TimeInputProps) {

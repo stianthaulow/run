@@ -16,11 +16,12 @@ import { useTranslation } from "react-i18next";
 
 type SplitTimesProps = {
   distance: number;
+  className?: string;
 };
 
 export const splitTimesIsOpenAtom = atom(false);
 
-export function SplitTimes({ distance }: SplitTimesProps) {
+export function SplitTimes({ distance, className }: SplitTimesProps) {
   const setIsOpen = useSetAtom(splitTimesIsOpenAtom);
   const { t } = useTranslation();
   const { pace, getTimeForDistance, kph } = usePace();
@@ -31,9 +32,11 @@ export function SplitTimes({ distance }: SplitTimesProps) {
   return (
     <Sheet onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button size="icon" variant="ghost" className="rounded-full">
-          <Timer />
-        </Button>
+        <div className={className}>
+          <Button size="icon" variant="ghost" className="rounded-full">
+            <Timer />
+          </Button>
+        </div>
       </SheetTrigger>
       <SheetContent side="top" className="max-h-screen overflow-auto">
         <SheetHeader>
