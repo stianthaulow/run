@@ -91,6 +91,7 @@ export function EditSettings() {
 const settingsFormSchema = z.object({
   showSpeedFirst: z.boolean(),
   showMiles: z.boolean(),
+  showSplits: z.boolean(),
 });
 
 function SettingsForm({
@@ -143,6 +144,21 @@ function SettingsForm({
                 />
               </FormControl>
               <FormLabel>{t("settings.showMiles")}</FormLabel>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="showSplits"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center space-x-2 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel>{t("settings.showSplits")}</FormLabel>
             </FormItem>
           )}
         />

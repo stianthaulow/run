@@ -103,6 +103,7 @@ export function usePace() {
     stepPaceFromString,
     stepSpeedFromString,
     stepPace,
+    pace,
     kph,
     mph,
   };

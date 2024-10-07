@@ -1,8 +1,10 @@
+import { splitTimesIsOpenAtom } from "@/components/SplitTimes";
 import { Button } from "@/components/ui/button";
 import { useEditMode } from "@/hooks/useEditMode";
 import { useHoldButton } from "@/hooks/useHoldButton";
 import { useInputMode } from "@/hooks/useInputMode";
 import { usePace } from "@/hooks/usePace";
+import { useAtomValue } from "jotai";
 import { Minus, MoveVertical, Plus } from "lucide-react";
 import { useCallback, useEffect, useRef } from "react";
 
@@ -17,6 +19,7 @@ export function PaceSlider() {
   const { stepPace } = usePace();
   const { isEditMode } = useEditMode();
   const { isInputMode } = useInputMode();
+  const isSplitTimesOpen = useAtomValue(splitTimesIsOpenAtom);
 
   const stepOnScroll = useCallback(
     (e: WheelEvent) => {
@@ -35,12 +38,13 @@ export function PaceSlider() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("wheel", stepOnScroll, { passive: false });
+    if (!isSplitTimesOpen)
+      window.addEventListener("wheel", stepOnScroll, { passive: false });
 
     return () => {
       window.removeEventListener("wheel", stepOnScroll);
     };
-  }, [stepOnScroll]);
+  }, [stepOnScroll, isSplitTimesOpen]);
 
   return (
     <div

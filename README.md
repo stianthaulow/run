@@ -6,6 +6,6 @@ work in progress, currently works best on mobile,but only tested on a Samsung Ga
 
 ## Todo
 
-- [ ] Split times pr km / mile
+- [x] Split times pr km / mile
 - [ ] Desktop layout
 - [ ] bug: keyboard issue when adding custom distance

@@ -4,6 +4,7 @@ import { atomWithStorage } from "jotai/utils";
 const settingsAtom = atomWithStorage("settings", {
   showSpeedFirst: false,
   showMiles: true,
+  showSplits: true,
 });
 
 export function useSettings() {

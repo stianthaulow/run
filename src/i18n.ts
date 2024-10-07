@@ -43,11 +43,20 @@ const noTranslation = {
     description: "Endre innstillinger",
     showSpeedFirst: "Vis hastighet først",
     showMiles: "Vis minutter pr mile og mph",
+    showSplits: "Vis splittider",
     save: "Lagre",
     close: "Lukk",
   },
   help: {
     title: "Hjelp",
+  },
+  splits: {
+    title: "Splittider",
+    totalDistance: "Total distanse",
+    distance: "Distanse",
+    time: "Tid",
+    avgPace: "Snittpace",
+    avgSpeed: "Snitthastighet",
   },
 };
 
@@ -88,11 +97,20 @@ const enTranslation: typeof noTranslation = {
     description: "Change settings",
     showSpeedFirst: "Show speed first",
     showMiles: "Show minutes pr mile and mph",
+    showSplits: "Show splits",
     save: "Save",
     close: "Close",
   },
   help: {
     title: "Help",
+  },
+  splits: {
+    title: "Split times",
+    totalDistance: "Total distance",
+    distance: "Distance",
+    time: "Time",
+    avgPace: "Average pace",
+    avgSpeed: "Average speed",
   },
 };
 
