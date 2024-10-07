@@ -16,7 +16,7 @@ export function Layout({ children }: LayoutProps) {
   const { isEditMode } = useEditMode();
 
   return (
-    <div className="flex min-h-svh justify-between p-2">
+    <div className="flex min-h-svh justify-between p-2 pr-0">
       <main className="w-full">
         {isTabletOrLarger ? (
           <Card className="w-full max-w-md p-6">{children}</Card>
@@ -31,7 +31,7 @@ export function Layout({ children }: LayoutProps) {
       )}
       {!isEditMode && <PaceSlider />}
 
-      <div className="fixed right-2 bottom-2 flex gap-2">
+      <div className="fixed right-3 bottom-2 flex gap-2">
         {isEditMode && <EditSettings />}
         <EditModeButton />
       </div>

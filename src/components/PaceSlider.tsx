@@ -49,7 +49,7 @@ export function PaceSlider() {
   return (
     <div
       id="pace-slider"
-      className="flex w-20 flex-col items-center justify-between rounded-full border border-zinc-900 py-2 transition-all duration-200"
+      className="flex w-28 flex-col items-center justify-between rounded-full border border-zinc-900 py-2 transition-all duration-200"
       style={{ height: "calc(100dvh - 6rem )" }}
       onTouchStart={(e) => {
         startYRef.current = e.touches[0].clientY;
@@ -81,7 +81,7 @@ function StepPaceButton({ children, paceStepHandler }: StepPaceButtonProps) {
   return (
     <Button
       size="icon"
-      className="rounded-full"
+      className="size-12 rounded-full"
       onClick={paceStepHandler}
       {...events}
     >
