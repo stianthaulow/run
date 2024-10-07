@@ -33,7 +33,7 @@ export function calculateSplits(totalDistance: number, pace: number) {
     [100, 10],
     [800, 50],
     [3000, 500],
-    [21097.5, 1000],
+    [10000, 1000],
     [42195, 5000],
   ] as const;
 

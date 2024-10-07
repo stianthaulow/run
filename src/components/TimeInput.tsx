@@ -17,7 +17,11 @@ type TimeInputProps = {
   className?: string;
 };
 
-export function TimeInput({ stopEditing, distance }: TimeInputProps) {
+export function TimeInput({
+  stopEditing,
+  distance,
+  className,
+}: TimeInputProps) {
   const ref = useClickOutside<HTMLInputElement>(stopEditing);
   const { getTimeForDistance, stepPaceFromString, setFromPaceString } =
     usePace();
@@ -101,23 +105,25 @@ export function TimeInput({ stopEditing, distance }: TimeInputProps) {
   }, [value, ref]);
 
   return (
-    <Input
-      ref={ref}
-      autoFocus
-      type="text"
-      value={value}
-      id={distance.length.toString()}
-      pattern={validTimePattern}
-      aria-label="Time Input"
-      aria-invalid={!isValidTime(value)}
-      onChange={(e) => {
-        cursorPositionRef.current = null;
-        setValue(e.target.value);
-      }}
-      onKeyDown={handleKeyDown}
-      onWheel={handleWheel}
-      className="w-auto min-w-10 max-w-32 p-0 px-1 text-2xl invalid:bg-red-800"
-      style={{ width: `${value.length + 1}ch` }}
-    />
+    <div className={className}>
+      <Input
+        ref={ref}
+        autoFocus
+        type="text"
+        value={value}
+        id={distance.length.toString()}
+        pattern={validTimePattern}
+        aria-label="Time Input"
+        aria-invalid={!isValidTime(value)}
+        onChange={(e) => {
+          cursorPositionRef.current = null;
+          setValue(e.target.value);
+        }}
+        onKeyDown={handleKeyDown}
+        onWheel={handleWheel}
+        className="mr-1 w-auto min-w-10 max-w-32 p-0 text-2xl invalid:bg-red-800"
+        style={{ width: `${value.length}ch` }}
+      />
+    </div>
   );
 }

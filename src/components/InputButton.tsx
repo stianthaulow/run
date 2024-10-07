@@ -15,7 +15,7 @@ export function InputButton({
     <button
       type="button"
       className={cn([
-        "rounded text-left text-2xl focus:outline-dotted focus:outline-2 focus:outline-zinc-500 focus:outline-offset-2",
+        "rounded pr-2 text-left text-2xl focus:outline-dotted focus:outline-2 focus:outline-zinc-500 focus:outline-offset-2",
         className,
       ])}
       onClick={handleInputMode}
