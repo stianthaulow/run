@@ -50,6 +50,26 @@ export default {
           "5": "hsl(var(--chart-5))",
         },
       },
+      keyframes: {
+        jiggle: {
+          "0%": { transform: "rotate(1deg) translateX(-1px) translateY(1px)" },
+          "25%": {
+            transform: "rotate(-1deg) translateX(1px) translateY(-1px)",
+          },
+          "50%": {
+            transform: "rotate(1.5deg) translateX(-1px) translateY(0px)",
+          },
+          "75%": {
+            transform: "rotate(-1.5deg) translateX(1px) translateY(1px)",
+          },
+          "100%": {
+            transform: "rotate(1deg) translateX(0px) translateY(-1px)",
+          },
+        },
+      },
+      animation: {
+        jiggle: "jiggle 0.4s ease-in-out infinite",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
