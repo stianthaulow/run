@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "Cardinal90.multi-cursor-case-preserve",
+    "ellreka.tailwindcss-highlight",
+    "johnpapa.vscode-peacock",
+    "moalamri.inline-fold",
+    "wix.vscode-import-cost",
+    "biomejs.biome",
+    "github.vscode-github-actions"
+  ]
+}
