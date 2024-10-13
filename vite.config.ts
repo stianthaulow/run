@@ -3,6 +3,8 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+export const ZINC_950 = "#09090b";
+
 export default defineConfig({
   plugins: [
     react(),
@@ -20,8 +22,8 @@ export default defineConfig({
         name: "Run",
         short_name: "Run",
         description: "Pace calculator",
-        theme_color: "#f4f4f5",
-        background_color: "#09090b",
+        theme_color: ZINC_950,
+        background_color: ZINC_950,
       },
 
       workbox: {
