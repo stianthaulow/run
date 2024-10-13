@@ -9,5 +9,7 @@ export function useEditMode() {
 
   const toggleEditMode = () => setIsEditMode((prev) => !prev);
 
-  return { isEditMode, toggleEditMode };
+  const exitEditMode = () => setIsEditMode(false);
+
+  return { isEditMode, toggleEditMode, exitEditMode };
 }

@@ -25,6 +25,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
+import { useEditMode } from "@/hooks/useEditMode";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useSettings } from "@/hooks/useSettings";
 import { z } from "@/i18n";
@@ -38,9 +39,15 @@ import { useTranslation } from "react-i18next";
 export function EditSettings() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const { exitEditMode } = useEditMode();
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const description = t("settings.description");
+
+  const handleSettingsFormSuccess = () => {
+    setOpen(false);
+    exitEditMode();
+  };
 
   if (isDesktop) {
     return (
@@ -59,7 +66,7 @@ export function EditSettings() {
             <DialogTitle>{t("settings.title")}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
-          <SettingsForm onSuccess={() => setOpen(false)} />
+          <SettingsForm onSuccess={handleSettingsFormSuccess} />
         </DialogContent>
       </Dialog>
     );
@@ -77,7 +84,7 @@ export function EditSettings() {
           <DrawerTitle>{t("settings.title")}</DrawerTitle>
           <DrawerDescription>{description}</DrawerDescription>
         </DrawerHeader>
-        <SettingsForm className="px-4" onSuccess={() => setOpen(false)} />
+        <SettingsForm className="px-4" onSuccess={handleSettingsFormSuccess} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">{t("settings.close")}</Button>
