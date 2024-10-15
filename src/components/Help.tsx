@@ -52,7 +52,7 @@ export function Help() {
               target="_blank"
               rel="noreferrer"
             >
-              <img src={githubIcon} alt="Github" className="size-5 invert" />
+              <img src={githubIcon} alt="Github" className="size-5 invert" />{" "}
               Github
             </a>
           </DropdownMenuItem>
