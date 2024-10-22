@@ -16,7 +16,7 @@ const preventDefault = (e: TouchEvent) => {
 
 export function PaceSlider() {
   const startYRef = useRef(0);
-  const { stepPace } = usePace();
+  const { stepPace, roundPace } = usePace();
   const { isEditMode } = useEditMode();
   const { isInputMode } = useInputMode();
   const isSplitTimesOpen = useAtomValue(splitTimesIsOpenAtom);
@@ -59,6 +59,7 @@ export function PaceSlider() {
         const deltaY = currentY - startYRef.current;
         stepPace(deltaY * 0.005);
       }}
+      onTouchEnd={roundPace}
     >
       <StepPaceButton paceStepHandler={() => stepPace(-1)}>
         <Plus />

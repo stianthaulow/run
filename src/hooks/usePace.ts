@@ -96,6 +96,11 @@ export function usePace() {
     [setPace],
   );
 
+  const roundPace = useCallback(
+    () => setPace((prev) => Math.round(prev)),
+    [setPace],
+  );
+
   return {
     getTimeForDistance,
     setFromPaceString,
@@ -103,6 +108,7 @@ export function usePace() {
     stepPaceFromString,
     stepSpeedFromString,
     stepPace,
+    roundPace,
     pace,
     kph,
     mph,
