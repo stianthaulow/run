@@ -61,13 +61,18 @@ export function formatTime(
 ): string {
   const totalSeconds = Math.floor(milliseconds / 1000);
   const hours = Math.floor(totalSeconds / SECONDS_IN_HOUR);
-  const minutes = Math.floor(
+  let minutes = Math.floor(
     (totalSeconds % SECONDS_IN_HOUR) / SECONDS_IN_MINUTE,
   );
   let seconds = totalSeconds % SECONDS_IN_MINUTE;
   const millis = Math.floor(milliseconds % 1000);
 
   if (!showMilliseconds && millis > 500) seconds++;
+
+  if (seconds > 59) {
+    seconds = 0;
+    minutes++;
+  }
 
   const timeString =
     hours > 0

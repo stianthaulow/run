@@ -74,6 +74,7 @@ test("formatTime", () => {
   expect(formatTime(500)).toBe("0");
   expect(formatTime(1000)).toBe("1");
   expect(formatTime(60000)).toBe("01:00");
+  expect(formatTime(119900)).toBe("02:00");
   expect(formatTime(61000)).toBe("01:01");
   expect(formatTime(360000)).toBe("06:00");
 
