@@ -62,7 +62,7 @@ function PWABadge() {
 export default PWABadge;
 
 /**
- * Register a periodic sync check using the provided interval (10 seconds by default).
+ * Register a periodic sync check using the provided interval (1 hour by default).
  */
 function registerPeriodicSync(
   period: number,
