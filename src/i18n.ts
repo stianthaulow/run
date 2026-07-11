@@ -2,9 +2,7 @@ import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import { z } from "zod";
-import { zodI18nMap } from "zod-i18n-map";
-import enZodTranslation from "zod-i18n-map/locales/en/zod.json";
-import nbZodTranslation from "zod-i18n-map/locales/nb/zod.json";
+import { en as zodEn, no as zodNo } from "zod/locales";
 
 const noTranslation = {
   pace: "Pace",
@@ -131,17 +129,20 @@ const enTranslation: typeof noTranslation = {
 const resources = {
   en: {
     translation: enTranslation,
-    zod: enZodTranslation,
   },
   no: {
     translation: noTranslation,
-    zod: nbZodTranslation,
   },
   nb: {
     translation: noTranslation,
-    zod: nbZodTranslation,
   },
 };
+
+function setZodLocale(language: string) {
+  z.config(language.startsWith("en") ? zodEn() : zodNo());
+}
+
+i18n.on("languageChanged", setZodLocale);
 
 i18n
   .use(LanguageDetector)
@@ -153,8 +154,6 @@ i18n
       escapeValue: false,
     },
   });
-
-z.setErrorMap(zodI18nMap);
 
 export { z };
 
