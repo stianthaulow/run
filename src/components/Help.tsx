@@ -1,3 +1,9 @@
+import { t } from "i18next";
+import { CircleHelp, FileQuestion } from "lucide-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
+import githubIcon from "@/assets/github.svg";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -7,10 +13,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CircleHelp, FileQuestion } from "lucide-react";
-import { useTranslation } from "react-i18next";
-
-import githubIcon from "@/assets/github.svg";
 import {
   Sheet,
   SheetContent,
@@ -18,8 +20,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { t } from "i18next";
-import { useState } from "react";
 
 export function Help() {
   const { t } = useTranslation();

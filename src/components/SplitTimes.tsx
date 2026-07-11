@@ -1,3 +1,7 @@
+import { atom, useSetAtom } from "jotai";
+import { Timer } from "lucide-react";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -9,10 +13,6 @@ import {
 } from "@/components/ui/sheet";
 import { usePace } from "@/hooks/usePace";
 import { calculateSplits, formatDistance } from "@/lib/splits";
-import { atom, useSetAtom } from "jotai";
-import { Timer } from "lucide-react";
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
 
 type SplitTimesProps = {
   distance: number;

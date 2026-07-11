@@ -1,3 +1,10 @@
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type WheelEvent,
+} from "react";
 import { Input } from "@/components/ui/input";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { usePace } from "@/hooks/usePace";
@@ -6,13 +13,6 @@ import {
   speedFactorFromIndex,
   validSpeedPattern,
 } from "@/lib/time";
-import {
-  type WheelEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
 
 type SpeedInputProps = {
   stopEditing: () => void;
@@ -116,7 +116,7 @@ export function SpeedInput({ stopEditing, unit }: SpeedInputProps) {
       }}
       onKeyDown={handleKeyDown}
       onWheel={handleWheel}
-      className="max-w-32 text-2xl invalid:bg-red-800 "
+      className="max-w-32 text-2xl invalid:bg-red-800"
     />
   );
 }

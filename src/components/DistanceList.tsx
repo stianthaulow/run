@@ -1,3 +1,5 @@
+import { Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { AddDistance } from "@/components/AddDistance";
 import { SplitTimes } from "@/components/SplitTimes";
 import { TimeControl } from "@/components/TimeControl";
@@ -9,8 +11,6 @@ import { useDistances } from "@/hooks/useDistances";
 import { useEditMode } from "@/hooks/useEditMode";
 import { useSettings } from "@/hooks/useSettings";
 import { cn } from "@/lib/utils";
-import { Trash2 } from "lucide-react";
-import { useTranslation } from "react-i18next";
 
 export function DistanceList() {
   const { visibleDistances } = useDistances();

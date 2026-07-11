@@ -1,7 +1,7 @@
-import { type Distance, initialDistances } from "@/distances";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useTranslation } from "react-i18next";
+import { type Distance, initialDistances } from "@/distances";
 
 const distancesAtom = atomWithStorage("distances", initialDistances);
 

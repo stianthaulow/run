@@ -1,3 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Settings } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -30,11 +35,6 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useSettings } from "@/hooks/useSettings";
 import { z } from "@/i18n";
 import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Settings } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 
 export function EditSettings() {
   const { t } = useTranslation();

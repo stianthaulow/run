@@ -1,15 +1,15 @@
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type WheelEvent,
+} from "react";
 import { Input } from "@/components/ui/input";
 import type { Distance } from "@/distances";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { usePace } from "@/hooks/usePace";
 import { isValidTime, timeFactorFromIndex, validTimePattern } from "@/lib/time";
-import {
-  type WheelEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
 
 type TimeInputProps = {
   stopEditing: () => void;

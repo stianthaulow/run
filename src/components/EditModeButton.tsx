@@ -1,7 +1,7 @@
+import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEditMode } from "@/hooks/useEditMode";
 import { cn } from "@/lib/utils";
-import { Pencil } from "lucide-react";
 
 export function EditModeButton() {
   const { toggleEditMode, isEditMode } = useEditMode();

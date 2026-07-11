@@ -1,11 +1,11 @@
 import { expect, test } from "vitest";
 
 import {
-  type ValidTimeString,
   formatTime,
   isValidSpeed,
   isValidTime,
   parseTime,
+  type ValidTimeString,
 } from "./time";
 
 test("parseTime", () => {

@@ -1,12 +1,12 @@
+import { useAtomValue } from "jotai";
+import { Minus, MoveVertical, Plus } from "lucide-react";
+import { useCallback, useEffect, useRef } from "react";
 import { splitTimesIsOpenAtom } from "@/components/SplitTimes";
 import { Button } from "@/components/ui/button";
 import { useEditMode } from "@/hooks/useEditMode";
 import { useHoldButton } from "@/hooks/useHoldButton";
 import { useInputMode } from "@/hooks/useInputMode";
 import { usePace } from "@/hooks/usePace";
-import { useAtomValue } from "jotai";
-import { Minus, MoveVertical, Plus } from "lucide-react";
-import { useCallback, useEffect, useRef } from "react";
 
 const preventDefault = (e: TouchEvent) => {
   if (e.target instanceof Element && e.target.id === "pace-slider") {
