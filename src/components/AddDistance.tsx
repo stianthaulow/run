@@ -110,7 +110,7 @@ function DefaultDistances() {
 }
 
 const addFormSchema = z.object({
-  distance: z.coerce.number().int().positive().min(1),
+  distance: z.coerce.number<number>().int().positive().min(1),
   label: z.string().min(1),
   showMilliseconds: z.boolean(),
 });
