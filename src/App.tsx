@@ -1,4 +1,4 @@
-import PWABadge from "@/PWABadge.tsx";
+import { useTranslation } from "react-i18next";
 import { DistanceList } from "@/components/DistanceList";
 import { Layout } from "@/components/Layout";
 import { SpeedControl } from "@/components/SpeedControl";
@@ -6,7 +6,7 @@ import { TimeControl } from "@/components/TimeControl";
 import { Label } from "@/components/ui/label";
 import { useSettings } from "@/hooks/useSettings";
 import { cn } from "@/lib/utils";
-import { useTranslation } from "react-i18next";
+import PWABadge from "@/PWABadge.tsx";
 
 function App() {
   const { t } = useTranslation();

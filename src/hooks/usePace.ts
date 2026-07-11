@@ -1,12 +1,12 @@
-import {
-  type ValidSpeedString,
-  type ValidTimeString,
-  formatTime,
-  parseTime,
-} from "@/lib/time";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useCallback } from "react";
+import {
+  formatTime,
+  parseTime,
+  type ValidSpeedString,
+  type ValidTimeString,
+} from "@/lib/time";
 
 const initialPaceString = "04:30" as ValidTimeString;
 const METERS_IN_KM = 1000;

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import norwegianFlag from "@/assets/no.svg";
 import englishFlag from "@/assets/us.svg";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTranslation } from "react-i18next";
 
 export function LanguageSelector() {
   const { t, i18n } = useTranslation();

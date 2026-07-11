@@ -1,5 +1,5 @@
-import { useEditMode } from "@/hooks/useEditMode";
 import { useCallback, useMemo, useState } from "react";
+import { useEditMode } from "@/hooks/useEditMode";
 
 export function useInputMode() {
   const [isInputMode, setIsInputMode] = useState(false);
